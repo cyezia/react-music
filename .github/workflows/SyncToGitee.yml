@@ -17,7 +17,7 @@ jobs:
         dst: gitee/cyezia 
         dst_key: ${{ secrets.DXSECRETRSA }}  
         dst_token:  ${{ secrets.GITEE_TOKEN }} 
-        static_list: "F2E" 
+        static_list: "react-music" 
         force_update: true 
         debug: true  
 

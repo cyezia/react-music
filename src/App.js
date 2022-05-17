@@ -1,3 +1,4 @@
+import { GlobalStyle } from './style';
 function App() {
   return (
     <div className="App">
