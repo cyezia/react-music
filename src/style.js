@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
+// 创建全局样式并导出
 export const GlobalStyle = createGlobalStyle`
         html, body, div, span, applet, object, iframe,
         h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -18,7 +19,9 @@ export const GlobalStyle = createGlobalStyle`
                 padding: 0;
                 border: 0;
                 font-size: 100%;
+                // font: inherit; 设置所有元素字体保持一致
                 font: inherit;
+                // vertical-align: baseline; 垂直方向对齐 baseline 小写x下面的一条基准线
                 vertical-align: baseline;
         }
 
@@ -36,6 +39,8 @@ export const GlobalStyle = createGlobalStyle`
         ol, ul {
                 list-style: none;
         }
+        // <blockquote> 与 </blockquote> 之间的所有文本都会从常规文本中分离出来，经常会在左、右两边进行缩进（增加外边距），而且有时会使用斜体
+        // q标签 标记短的引用，并在引用周围加上引号
         blockquote, q {
                 quotes: none;
         }
@@ -45,12 +50,14 @@ export const GlobalStyle = createGlobalStyle`
                 content: none;
         }
         tabel {
-          border-collapse: collapse;
-          border-spacing: 0;
+                // 为表格设置合并边框模型 合并为一个单一的边框
+                border-collapse: collapse;
+                // 设置相邻单元格边框之间的距离
+                border-spacing: 0;
         }
         a {
-          text-decoration: none;
-          color: #fff;
+                text-decoration: none;
+                color: #fff;
         }
 `
 
