@@ -53,14 +53,14 @@
 
 ## Redux术语
 
-- Action: 是一个具有type字段的普通JavaScript对象，描述应用程序中发生了什么事件
+### Action: 是一个具有type字段的普通JavaScript对象，描述应用程序中发生了什么事件
 
       const addTodoAction = {
         type: 'todos/todoAdded',  // 第一部分是这个action所属的特征或类别，第二部分是发生的具体事情
         payload: 'Buy Milk'   // 包含有关发生事情的附加信息
       }
 
-- Action Creator: 是一个创建并返回一个action对象的函数
+### Action Creator: 是一个创建并返回一个action对象的函数
 
       const addTodo = text => {
         return (
@@ -69,4 +69,60 @@
         )
       }
 
-- Reducer: 是一个函数，接收当前的state和一个action对象，必要时决定如何更新状态，并返回新状态
+### Reducer: 是一个函数，接收当前的state和一个action对象，必要时决定如何更新状态，并返回新状态
+
+      const initialState = { value: 0 }
+      function counterReducer(state = initialState, action) {
+        // 检查reducer是否关心这个action
+        if(action.type === 'counter/increment') {
+          // 如果是，复制state
+          return (
+            ...state,
+            // 使用新值更新state副本
+            value: state.value + 1
+          )
+        }
+        // 返回原来的state不变
+        return state;
+      }
+
+### Store 当前Redux应用的状态存在于一个名为store的对象中
+
+### dispatch Redux store的一个方法
+
+- 更新state的唯一方法就是调用store.dispatch()并传入一个action对象，store将执行所有reducer函数并计算出更新好的state，调用getState()可以获取新state
+
+      store.dispatch({ type: 'counter/increment'})
+      console.log(store.getState());
+
+- dispatch的一个action可以理解为触发一个事件，发生了一些事情，我们希望store知道这件事，reducer就像事件监听一样，当它们收到了关注的action后，他就会更新state作为响应
+
+### selector 该函数可以从store状态树中提取指定的片段
+
+      const selectCounterValue = state => state.value
+      const currentValue = selectCounterValue(store.getState())
+      console.log(currentValue);
+
+## Redux数据流
+
+- 初始启动
+
+  使用顶层的root reducer函数创建Redux store
+
+  store调用一次root reducer，并将返回值保存为它的初始state
+
+  当UI首次渲染时，UI组件访问Redux store当前的state，并使用该数据来决定要呈现的内容，同时监听state的更新，以便他们可以知道state是否已经更改
+
+- 更新环节
+
+  应用程序中发生了某些事情，例如用户单击按钮
+
+  dispatch一个action到Redux store，例如dispatch({ type: 'counter/increment'})
+
+  store用之前的state和当前的action再次运行reducer函数，并将返回值保存为新的state
+
+  store通知所有订阅过的UI，通知他们store发生更新
+
+  每个订阅过store数据的UI组件都会检查它们需要的state部分是否被更新
+
+  发现数据被更新的每个组件都会强制使用新数据重新渲染，紧接着更新网页

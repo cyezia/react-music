@@ -1,6 +1,7 @@
 import React from 'react';
 import { renderRoutes } from "react-router-config";
 
+// 歌手组件
 function Singers(props) {
   const { route } = props;
 
@@ -12,4 +13,4 @@ function Singers(props) {
   )
 }
 
-export default React.memo (Singers);
+export default React.memo(Singers);

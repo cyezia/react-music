@@ -1,9 +1,10 @@
 import React from 'react';
+// react-router-config 用于静态路由配置
 import { renderRoutes } from "react-router-config";
 import { Top, Tab, TabItem } from './style';
 import { NavLink } from 'react-router-dom'; //利用NavLink组件进行路由跳转
 
-
+// 页面样式
 function Home(props) {
   const { route } = props;
 
@@ -15,6 +16,7 @@ function Home(props) {
         <span className="iconfont search">&#xe62b;</span>
       </Top>
       <Tab>
+        {/* NavLink 默认的样式是active  activeClassName="selected"指定当前路由的class */}
         <NavLink to="/recommend" activeClassName="selected">
           <TabItem><span> 推荐 </span></TabItem>
         </NavLink>
@@ -25,9 +27,10 @@ function Home(props) {
           <TabItem><span> 排行榜 </span></TabItem>
         </NavLink>
       </Tab>
+      {/* renderRoutes渲染路由表中对应的组件 */}
       { renderRoutes (route.routes) }
     </div>
   )
 }
 
-export default React.memo (Home);
+export default React.memo(Home);

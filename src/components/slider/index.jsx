@@ -3,9 +3,12 @@ import { SliderContainer } from './style';
 import "swiper/dist/css/swiper.css";
 import Swiper from "swiper";
 
+// 轮播图
 function Slider(props) {
   const [sliderSwiper, setSliderSwiper] = useState(null);
+
   const { bannerList } = props;
+
 
   useEffect(() => {
     if(bannerList.length && !sliderSwiper) {
@@ -25,6 +28,7 @@ function Slider(props) {
 
   return (
     <SliderContainer>
+      {/* 设置两边空白为红色，加一层遮罩*/}
       <div className="before"></div>
       <div className="slider-container">
         <div className="swiper-wrapper">
@@ -46,4 +50,4 @@ function Slider(props) {
   );
 }
 
-export default React.memo (Slider);
+export default React.memo(Slider);

@@ -1,6 +1,7 @@
 import React from 'react';
 import { renderRoutes } from "react-router-config";
 
+// 排行榜组件
 function Rank(props) {
   const { route } = props;
 
@@ -12,4 +13,4 @@ function Rank(props) {
   )
 }
 
-export default React.memo (Rank);
+export default React.memo(Rank);
