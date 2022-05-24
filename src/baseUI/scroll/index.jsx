@@ -1,7 +1,36 @@
-import React, { forwardRef, useEffect, useState,useRef } from 'react';
+import React, { forwardRef, useEffect, useState, useRef, useImperativeHandle } from 'react';
 import PropTypes from "prop-types";
 import BScroll from 'better-scroll';
 import styled from 'styled-components';
+
+const ScrollContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+`
+
+// 上拉loading动画
+// const PullUpLoading = styled.div`
+//   position: absolute;
+//   left: 0;
+//   right: 0;
+//   bottom: 5px;
+//   width: 60px;
+//   height: 60px;
+//   margin: auto;
+//   z-index: 100;
+// `
+
+// 下拉loading动画
+// const PullDownLoading = styled.div`
+//   position: absolute;
+//   left: 0;
+//   right: 0;
+//   top: 0;
+//   height: 30px;
+//   margin: auto;
+//   z-index: 100;
+// `
 
 // 作为通用组件，scroll在业务中会被经常取到原生DOM对象，函数式组件天生不具备被上层组件直接调用ref的条件，故用forwardRef进行包裹
 const Scroll = forwardRef((props, ref) => {
@@ -32,13 +61,6 @@ const Scroll = forwardRef((props, ref) => {
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // 每次重新渲染都要刷新实例 防止无法滑动
-  useEffect(() => {
-    if(refresh && bScroll) {
-      bScroll.refresh();
-    }
-  });
 
   // 给实例绑定scroll事件
   useEffect(() => {
@@ -79,7 +101,43 @@ const Scroll = forwardRef((props, ref) => {
     }
   }, [pullDown, bScroll]);
 
-})
+  // 每次重新渲染都要刷新实例 防止无法滑动
+  useEffect(() => {
+    if(refresh && bScroll) {
+      bScroll.refresh();
+    }
+  });
+
+  // useImperativeHandle 第二个参数帮助把返回的内容挂载到父组件
+  useImperativeHandle(ref,  () => ({
+    refresh() {
+      if(bScroll) {
+        bScroll.refresh();
+        bScroll.scrollTo(0, 0);
+      }
+    },
+    getBScroll() {
+      if(bScroll) {
+        return bScroll;
+      }
+    }
+  }));
+
+
+  // const PullUpdisplayStyle = pullUpLoading ? { display: "" } : { display: "none" };
+  // const PullDowndisplayStyle = pullDownLoading ? { display: "" } : { display: "none" };
+  return (
+    <ScrollContainer ref={scrollContaninerRef}>
+      {props.children}
+      {/* 滑到底部加载动画 */}
+      {/* <PullUpLoading style={ PullUpdisplayStyle }><Loading></Loading></PullUpLoading> */}
+      {/* 顶部下拉刷新动画 */}
+      {/* <PullDownLoading style={ PullDowndisplayStyle }><Loading2></Loading2></PullDownLoading> */}
+      
+    </ScrollContainer>
+  );
+
+});
 
 
 
