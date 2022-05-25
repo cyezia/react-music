@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import Slider from '../../components/slider';
 import RecommendList from '../../components/list';
-import Scroll from '../../baseUI/scroll';
+import Scroll from '../../baseUI/scroll/index';
 import { Content } from './style';
 import * as actionTypes from './store/actionCreators'; 
 import { connect } from 'react-redux';
+import { renderRoutes } from 'react-router-config';
 
 // 推荐组件
 function Recommend(props) {
@@ -54,6 +55,7 @@ function Recommend(props) {
           <RecommendList recommendList={recommendListJS}></RecommendList>
         </div>
       </Scroll>
+      { renderRoutes(props.route.routes) }
     </Content>
   );
 }

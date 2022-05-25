@@ -3,6 +3,7 @@
 import * as actionTypes from './constants';
 // fromJS 用于把JS数据转换成immutable数据
 import { fromJS } from "immutable";
+
 const defaultState = fromJS({
   bannerList: [],
   recommendList: []
