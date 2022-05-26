@@ -16,7 +16,7 @@ export const changeRecommendList = (data) => ({
 })
 
 export const getBannerList = () => {
-  return(dispatch) => {
+  return (dispatch) => {
     getBannerRequest().then(data => {
       dispatch(changeBannerList(data.banners));
     }).catch(() => {
@@ -26,7 +26,7 @@ export const getBannerList = () => {
 };
 
 export const getRecommendList = () => {
-  return(dispatch) => {
+  return (dispatch) => {
     getRecommendListRequest().then(data => {
       dispatch(changeRecommendList(data.result));
     }).catch(() => {

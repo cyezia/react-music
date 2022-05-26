@@ -9,6 +9,7 @@ export const getCount = (count) => {
   }
 }
 
+// 防抖函数
 const debounce = (func, delay) => {
   let timer;
   return function(...args) {

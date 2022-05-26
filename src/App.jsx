@@ -14,7 +14,7 @@ function App() {
       <HashRouter>
         <GlobalStyle></GlobalStyle>
         <IconStyle></IconStyle>
-        <i className="iconfont"></i>
+        {/* <i className="iconfont"></i> */}
         {/* renderRoutes (routes)  函数渲染出路由表的对应组件 */}
         { renderRoutes (routes) }
       </HashRouter>

@@ -17,6 +17,7 @@ function Horizen(props) {
     Array.from(tagElems).forEach(ele => {
       totalWidth += ele.offsetWidth;
     });
+    totalWidth += 2;
     categoryDOM.style.width = `${totalWidth}px`
   }, []);
 
@@ -31,7 +32,7 @@ function Horizen(props) {
                 <ListItem
                   key={item.key}
                   className={`${oldVal === item.key ? 'selected' : ''}`}
-                  onclick={() => handleClick(item.key)}
+                  onclick={() => handleClick(item)}
                 >{item.name}</ListItem>
               )
             })
@@ -39,7 +40,7 @@ function Horizen(props) {
         </List>
       </div>
     </Scroll>
-  )
+  );
 }
 
 // 接收的参数

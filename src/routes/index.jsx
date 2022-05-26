@@ -6,6 +6,7 @@ import Recommend from '../application/Recommend';
 import Singers from '../application/Singers';
 import Rank from '../application/Rank';
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default [
   {
     path: "/",
