@@ -20,17 +20,21 @@ function Rank(props) {
 //     </div>
 //   )
 // }
-
   const { rankList:list, loading, songsCount } = props;
+  // console.log('props: ', props);
   const { getRankListDataDispatch } = props;
 
+
   let rankList = list ? list.toJS() : [];
+  console.log('rankList: ', rankList);
+  
 
   useEffect(() => {
     if(!rankList.length) {
       getRankListDataDispatch();
     }
-  })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const renderSongList = (list) => {
     return list.length ? (
@@ -76,7 +80,7 @@ function Rank(props) {
       <Scroll>
         <div>
           <h1 className="offical" style={displayStyle}>官方榜</h1>
-            { renderRankList(officialList)}
+            { renderRankList(officialList) }
           <h1 className="global" style={displayStyle}>全球榜</h1>
             { renderRankList(globalList, true) }
         </div>
@@ -88,7 +92,8 @@ function Rank(props) {
 // 映射redux全局的state到组件的props上
 const mapStateToProps = (state) => ({
   rankList: state.getIn(['rank', 'rankList']),
-  loading: state.getIn(['rank', 'loading'])
+  loading: state.getIn(['rank', 'loading']),
+  songsCount: state.getIn(['player', 'playList'])
 });
 
 // 映射dispatch到props上

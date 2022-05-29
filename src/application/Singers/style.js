@@ -11,7 +11,7 @@ export const NavContainer = styled.div`
 `;
 
 export const ListContainer = styled.div`
-  position: flex;
+  position: fixed;
   top: 160px;
   left: 0;
   bottom: 0;

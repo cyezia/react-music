@@ -41,6 +41,8 @@ function Recommend(props) {
   }, []);
 
   const bannerListJS = bannerList ? bannerList.toJS() : [];
+  // console.log('bannerList: ', bannerList);
+
   const recommendListJS = recommendList ? recommendList.toJS() : [];
 
 

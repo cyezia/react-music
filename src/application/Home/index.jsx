@@ -7,6 +7,8 @@ import { NavLink } from 'react-router-dom'; //利用NavLink组件进行路由跳
 // 页面样式
 function Home(props) {
   const { route } = props;
+  console.log('props: ', props);
+
 
   return (
     <div>
@@ -17,9 +19,9 @@ function Home(props) {
       </Top>
       <Tab>
         {/* NavLink 默认的样式是active  activeClassName="selected"指定当前路由的class */}
-        <NavLink to="/recommend" activeClassName="selected"><TabItem><span> 推荐 </span></TabItem></NavLink>
-        <NavLink to="/singers" activeClassName="selected"><TabItem><span> 歌手 </span></TabItem></NavLink>
-        <NavLink to="/rank" activeClassName="selected"><TabItem><span> 排行榜 </span></TabItem></NavLink>
+        <NavLink exact to="/recommend" activeClassName="selected" replace><TabItem><span> 推荐 </span></TabItem></NavLink>
+        <NavLink exact to="/singers" activeClassName="selected" replace><TabItem><span> 歌手 </span></TabItem></NavLink>
+        <NavLink exact to="/rank" activeClassName="selected" replace><TabItem><span> 排行榜 </span></TabItem></NavLink>
       </Tab>
       {/* renderRoutes渲染路由表中对应的组件 */}
       { renderRoutes (route.routes) }
