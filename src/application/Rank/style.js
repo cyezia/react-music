@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import style from '../../assets/global-style';
 
+// props中的globalRank和tracks,length均代表是否为全球榜
 export const Container = styled.div`
   position: fixed;
   top: 90px;
@@ -30,12 +31,12 @@ export const List = styled.ul`
   }
 `
 export const ListItem = styled.li`
-  display: ${props => props.tracks.length ? "flex" : ""}
+  display: ${props => props.tracks.length ? "flex" : ""};
   padding: 3px 0;
   border-bottom: 1px solid ${style["border-color"]};
   .img_wrapper {
-    width: ${props => props.tracks.length ? "27vw" : "32vw"}
-    height: ${props => props.tracks.length ? "27vw" : "32vw"}
+    width: ${props => props.tracks.length ? "27vw" : "32vw"};
+    height: ${props => props.tracks.length ? "27vw" : "32vw"};
     border-radius: 3px;
     position: relative;
     .decorate {

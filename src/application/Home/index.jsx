@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom'; //利用NavLink组件进行路由跳
 // 页面样式
 function Home(props) {
   const { route } = props;
-  console.log('props: ', props);
+  // console.log('props: ', props);
 
 
   return (

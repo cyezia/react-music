@@ -26,7 +26,7 @@ function Rank(props) {
 
 
   let rankList = list ? list.toJS() : [];
-  console.log('rankList: ', rankList);
+  // console.log('rankList: ', rankList);
   
 
   useEffect(() => {
@@ -48,6 +48,7 @@ function Rank(props) {
     ) : null;
   }
 
+  // 渲染榜单列表函数 传入global区别不同的布局方式
   const renderRankList = (list, global) => {
     return (
       <List globalRank={global}>
@@ -73,6 +74,7 @@ function Rank(props) {
   let globalStartIndex = filterIndex(rankList);
   let officialList = rankList.slice(0, globalStartIndex);
   let globalList = rankList.slice(globalStartIndex);
+  // 榜单数据为加载出来之前都隐藏
   let displayStyle = loading ? {"display" : "none"} : {"display" : ""};
 
   return (
