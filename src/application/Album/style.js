@@ -9,6 +9,9 @@ export const Container = styled.div`
   bottom: 0;
   z-index: 1000;
   background: ${style["background-color"]};
+  .title {
+    color: ${style["font-color-light"]}
+  }
   // 动画样式
   transform-origin: right bottom;
   &.fly-enter, &.fly-appear {
@@ -30,8 +33,8 @@ export const Container = styled.div`
 export const TopDesc = styled.div`
   background-size: 100%;
   padding: 5px 20px;
-  /* padding-bottom: 50px;
-  margin-bottom: 20px; */
+  /* padding-bottom: 50px; */
+  /* margin-bottom: 20px;  */
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -125,7 +128,7 @@ export const Menu = styled.div`
   box-sizing: border-box;
   margin: 0 30px;
   margin-top: -20px;
-  /* margin-bottom: 10px; */
+  margin-bottom: 10px;
   >div {
     display: flex;
     flex-direction: column;

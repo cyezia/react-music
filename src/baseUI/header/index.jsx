@@ -9,7 +9,7 @@ const HeaderContainer = styled.div`
   padding-top: 0;
   height: 40px;
   width: 100%;
-  z-index: 100;
+  z-index: 10000;
   display: flex;
   line-height: 40px;
   color: ${style["font-color-light"]};

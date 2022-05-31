@@ -87,8 +87,8 @@ function Album(props) {
       onExited={props.history.goback}
     >
       <Container>
-        <Header title="返回" handleBack={handleBack}></Header>
-        <Scroll>
+        <Header title="返回" handleClick={handleBack}></Header>
+        <Scroll bounceTop={false}>
           <div>
             {/* 顶部样式 */}
             <TopDesc background={currentAlbum.coverImgUrl}>
