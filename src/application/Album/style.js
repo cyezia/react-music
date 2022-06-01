@@ -34,7 +34,7 @@ export const TopDesc = styled.div`
   background-size: 100%;
   padding: 5px 20px;
   /* padding-bottom: 50px; */
-  /* margin-bottom: 20px;  */
+  margin-bottom: 20px; 
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -43,6 +43,7 @@ export const TopDesc = styled.div`
   height: 200px;
   position: relative;
   z-index: 100;
+  /* overflow: hidden; */
   .background {
     /* z-index: -1; */
     background: url(${props => props.background}) left top no-repeat;
@@ -51,7 +52,8 @@ export const TopDesc = styled.div`
     position: absolute;
     width: 100%;
     height: 100%;
-    filter: blur(20px);
+    /*  背景虚化 */
+    /* filter: blur(20px); */
     transform: scale(1.5);  /* X Y 轴放大1.5倍 */
   }
   /* 图片容器 */
@@ -91,11 +93,12 @@ export const TopDesc = styled.div`
     justify-content: space-around;
     height: 120px;
     padding: 0 10px;
+    z-index: 10000;
     .title {
       max-height: 70px;
       overflow: hidden;
       text-overflow: ellipsis;  /* 溢出部分显示... */ 
-      color: ${style["font-color-desc"]};
+      color: ${style["font-color-light"]};
       font-weight: 700;
       line-height: 1.5;
       font-size: ${style["font-size-l"]};
@@ -115,7 +118,7 @@ export const TopDesc = styled.div`
       .name {
         line-height: 20px;
         font-size: ${style["font-size-m"]};
-        color: ${style["font-color-desc"]};
+        color: ${style["font-color-light"]};
       }
     }
   }
