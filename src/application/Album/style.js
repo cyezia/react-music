@@ -6,68 +6,59 @@ export const Container = styled.div`
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  z-index: 1000;
-  background: ${style["background-color"]};
-  .title {
-    color: ${style["font-color-light"]}
-  }
-  // 动画样式
+  bottom: ${props => props.play > 0 ? "60px": 0};
+  width: 100%;
+  z-index: 100;
+  overflow: hidden;
+  background: #f2f3f4;
   transform-origin: right bottom;
-  &.fly-enter, &.fly-appear {
-    transform: rotateZ (30deg) translate3d (100%, 0, 0);
+  &.fly-enter, &.fly-appear{
+    transform: rotateZ(30deg) translate3d(100%, 0, 0);
   }
-  &.fly-enter-active, &.fly-appear-active {
+  &.fly-enter-active, &.fly-appear-active{
     transition: transform .3s;
-    transform: rotateZ (0deg) translate3d (0, 0, 0);
+    transform: rotateZ(0deg) translate3d(0, 0, 0);
   }
-  &.fly-exit {
-    transform: rotateZ (0deg) translate3d (0, 0, 0);
+  &.fly-exit{
+    transform: rotateZ(0deg) translate3d(0, 0, 0);
   }
-  &.fly-exit-active {
+  &.fly-exit-active{
     transition: transform .3s;
-    transform: rotateZ (30deg) translate3d (100%, 0, 0);
+    transform: rotateZ(30deg) translate3d(100%, 0, 0);
   }
 `
-
 export const TopDesc = styled.div`
   background-size: 100%;
   padding: 5px 20px;
-  /* padding-bottom: 50px; */
-  margin-bottom: 20px; 
   display: flex;
-  justify-content: space-around;
   align-items: center;
+  justify-content: space-around;
   box-sizing: border-box;
   width: 100%;
   height: 200px;
   position: relative;
   z-index: 100;
-  /* overflow: hidden; */
-  .background {
+  .background{
     /* z-index: -1; */
     background: url(${props => props.background}) left top no-repeat;
-    
-    /* background-size: 100% 100%; */
+
     position: absolute;
     width: 100%;
     height: 100%;
-    /*  背景虚化 */
-    /* filter: blur(20px); */
-    transform: scale(1.5);  /* X Y 轴放大1.5倍 */
+    filter: blur(20px);
+    transform: scale(1.5); /* X Y 轴放大1.5倍 */
   }
-  /* 图片容器 */
-  .img_wrapper {
+  .img_wrapper{
     width: 120px;
     height: 120px;
-    position: relative;
+    position: relative;         
     .decorate {
       position: absolute;
       top: 0;
       width: 100%;
       height: 35px;
       border-radius: 3px;
-      background: linear-gradient(hsla(0, 0%, 43%, .4), hsla(0, 0%, 100%,0));
+      background: linear-gradient(hsla(0,0%,43%,.4),hsla(0,0%,100%,0));
     }
     .play_count {
       position: absolute;
@@ -75,17 +66,17 @@ export const TopDesc = styled.div`
       top: 2px;
       font-size: ${style["font-size-s"]};
       line-height: 15px;
-      color: ${style["font-color-light"]};
-      .play {
+      color: ${style["font-color-light"]};e
+      .play{
         vertical-align: top;
       }
     }
-    img {
+    img{
       width: 120px;
       height: 120px;
-      border-radius: 3px;
+      border-radius:3px;
     }
-  }  
+  }
   .desc_wrapper {
     flex: 1;
     display: flex;
@@ -93,23 +84,22 @@ export const TopDesc = styled.div`
     justify-content: space-around;
     height: 120px;
     padding: 0 10px;
-    z-index: 10000;
-    .title {
+    .title{
       max-height: 70px;
       overflow: hidden;
-      text-overflow: ellipsis;  /* 溢出部分显示... */ 
-      color: ${style["font-color-light"]};
+      text-overflow: ellipsis;
+      color: ${style["font-color-desc"]};
       font-weight: 700;
       line-height: 1.5;
       font-size: ${style["font-size-l"]};
     }
-    .person {
+    .person{
       display: flex;
-      .avatar {
+      .avatar{
         width: 20px;
         height: 20px;
         margin-right: 5px;
-        img {
+        img{
           width: 100%;
           height: 100%;
           border-radius: 50%;
@@ -118,7 +108,7 @@ export const TopDesc = styled.div`
       .name {
         line-height: 20px;
         font-size: ${style["font-size-m"]};
-        color: ${style["font-color-light"]};
+        color: ${style["font-color-desc"]};
       }
     }
   }
@@ -136,10 +126,11 @@ export const Menu = styled.div`
     display: flex;
     flex-direction: column;
     line-height: 20px;
+    text-align: center;
     font-size: ${style["font-size-s"]};
-
-    color: ${style["font-color-light"]};
-    z-index: 1000;
+    color: #3b1f1f;
+    color: ${style["font-color-desc"]};
+    z-index:1000;
     font-weight: 500;
     .iconfont {
       font-size: 20px;
@@ -147,18 +138,17 @@ export const Menu = styled.div`
   }
 `
 
-// 歌单页
 export const SongList = styled.div`
   border-radius: 10px;
   opacity: 0.98;
-  .first_line {
+  .first_line{
     box-sizing: border-box;
     padding: 10px 0;
     margin-left: 10px;
     position: relative;
     justify-content: space-between;
     border-bottom: 1px solid ${style["border-color"]};
-    .play_all {
+    .play_all{
       display: inline-block;
       line-height: 24px;
       color: ${style["font-color-desc"]};
@@ -167,11 +157,11 @@ export const SongList = styled.div`
         margin-right: 10px;
         vertical-align: top;
       }
-      .sum {
+      .sum{
         font-size: ${style["font-size-s"]};
         color: ${style["font-color-desc-v2"]};
       }
-      >span {
+      >span{
         vertical-align: top;
       }
     }
@@ -179,14 +169,12 @@ export const SongList = styled.div`
       display: flex;
       align-items: center;
       position: absolute;
-      right: 0;
-      top: 0;
-      bottom: 0;
+      right: 0; top :0px; bottom: 0;
       width: 130px;
       line-height: 34px;
-      background: ${style["theme-color"]};  /* 红色 */ 
+      background: ${style["theme-color"]};
       color: ${style["font-color-light"]};
-      font-size: 14px;
+      font-size: 0;
       border-radius: 3px;
       vertical-align: top;
       .iconfont {
@@ -194,41 +182,42 @@ export const SongList = styled.div`
         font-size: 10px;
         margin: 0 5px 0 10px;
       }
-      sapn {
+      span{
         font-size: 14px;
         line-height: 34px;
       }
-    }
   }
+}
 `
-// 歌曲列表
 export const SongItem = styled.ul`
-  >li {
+  >li{
     display: flex;
     height: 60px;
-    align-items: center;
-    .index {
+    align-items: center;  
+    .index{
       width: 60px;
       height: 60px;
       line-height: 60px;
       text-align: center;
     }
-    .info {
+    .info{
       box-sizing: border-box;
       flex: 1;
       display: flex;
       height: 100%;
+      padding: 5px 0;
       flex-direction: column;
       justify-content: space-around;
       border-bottom: 1px solid ${style["border-color"]};
-      >span:first-child {
+      >span:first-child{
         color: ${style["font-color-desc"]};
       }
-      >span:last-child {
+      >span:last-child{
         font-size: ${style["font-size-s"]};
         color: #bba8a8;
       }
     }
   }
-
 `
+
+

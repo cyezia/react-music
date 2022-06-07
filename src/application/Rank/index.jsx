@@ -36,6 +36,10 @@ function Rank(props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const enterDetail = (detail) => {
+    props.history.push(`/rank/${detail.id}`);
+  }
+
   const renderSongList = (list) => {
     return list.length ? (
       <SongList>
@@ -55,7 +59,7 @@ function Rank(props) {
         {
           list.map((item, index) => {
             return (
-              <ListItem key={`${item.coverImgId}${index}`} tracks={item.tracks}>
+              <ListItem key={`${item.coverImgId}${index}`} tracks={item.tracks} onClick={() => enterDetail(item)}>
                 <div className="img_wrapper">
                   <img src={item.coverImgUrl} alt="" />
                   <div className="decorate"></div>
@@ -85,6 +89,7 @@ function Rank(props) {
             { renderRankList(officialList) }
           <h1 className="global" style={displayStyle}>全球榜</h1>
             { renderRankList(globalList, true) }
+          { loading ? <EnterLoading><Loading></Loading></EnterLoading> : null }
         </div>
       </Scroll>
       { renderRoutes(props.route.routes)}

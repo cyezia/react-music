@@ -1,11 +1,12 @@
 import React from 'react';
 // Redirect 重定向
 import { Redirect } from "react-router-dom";
-import Home from '../application/Home';
-import Recommend from '../application/Recommend';
-import Singers from '../application/Singers';
-import Rank from '../application/Rank';
+import Home from '../application/Home/index';
+import Recommend from '../application/Recommend/index';
+import Singers from '../application/Singers/index';
+import Rank from '../application/Rank/index';
 import Album from '../application/Album/index';
+import Singer from '../application/Singer/index';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
@@ -33,43 +34,26 @@ export default [
       },
       {
         path: "/singers",
-        component: Singers
+        component: Singers,
+        key: "singers",
+        routes: [
+          {
+            path: "/singers/:id",
+            component: Singer
+          }
+        ]
       },
       {
-        path: "/rank",
-        component: Rank
+        path: "/rank/",
+        component: Rank,
+        key: "rank",
+        routes: [
+          {
+            path: "/rank/:id",
+            component: Album
+          }
+        ]
       }
     ]
   }
 ];
-
-// const route = [
-//   {
-//     path: "/",
-//     component: Home,
-//     routes: [
-//       {
-//         path: "/",
-//         exact: true, // 开启严格匹配
-//         render: () => (
-//           <Redirect to={"/recommend"} />  // 当/匹配不到时，重定向到推荐页面
-//         )
-//       },
-//       {
-//         exact: true,
-//         path: "/recommend",
-//         component: Recommend
-//       },
-//       {
-//         path: "/singers",
-//         components: Singers
-//       },
-//       {
-//         path: "/rank",
-//         component: Rank
-//       }
-//     ]
-//   }
-// ];
-
-// export default route;

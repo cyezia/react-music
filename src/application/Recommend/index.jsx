@@ -9,7 +9,7 @@ import { renderRoutes } from 'react-router-config';
 
 // 推荐组件
 function Recommend(props) {
-
+  // debugger;
   // mock数据
   // 轮播图
   // const bannerList = [1,2,3,4].map (item => {
