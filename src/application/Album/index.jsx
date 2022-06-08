@@ -15,7 +15,8 @@ import { HEADER_HEIGHT } from '../../api/config';
 
 
 function Album(props) {
-  // debugger;
+  // console.log('props: ', props);
+  debugger;
   const [ showStatus, setShowStatus ] = useState(true);
   const [ title, setTitle ] = useState("歌单");
   const musicNoteRef = useRef();
@@ -96,14 +97,14 @@ const mapStateToProps = (state) => {
   // console.log('state: ', state);
   // console.log('currentAlbum: ', state.getIn(['album', 'currentAlbum']));
   // console.log('pullUpLoading :>> ', state.getIn(['album', 'pullUpLoading']));
-  console.log('songsCount: ', state.getIn(['player', 'playList']));
+  // console.log('songsCount: ', state.getIn(['player', 'playList']));
   return ({
     currentAlbum: state.getIn(['album', 'currentAlbum']),
     pullUpLoading: state.getIn(['album', 'pullUpLoading']),
     enterLoading: state.getIn(['album', 'enterLoading']),
     startIndex: state.getIn(['album', 'startIndex']),
     totalCount: state.getIn(['album', 'totalCount']),
-    songsCount: state.getIn(['player', 'playList'])
+    songsCount: state.getIn(['player', 'playList']).size
     
   })
 };
