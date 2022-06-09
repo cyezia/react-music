@@ -100,7 +100,7 @@ const mapStateToProps = (state) => ({
   pullUpLoading: state.getIn(['singers', 'pullUpLoading']),
   pullDownLoading: state.getIn(['singers', 'pullDownLoading']),
   // page: state.getIn(['singers', 'page']),
-  // songs: state.getIn(['player', 'playList']).size
+  songs: state.getIn(['player', 'playList'])
 });
 const mapDispatchToProps = (dispatch) => {
   return {

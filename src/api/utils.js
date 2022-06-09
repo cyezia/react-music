@@ -41,7 +41,14 @@ export const getName = list => {
     return item;
   });
   return str;
-}
+};
 
 // 判断一个对象是否为空
 export const isEmptyObject = obj => !obj || Object.keys(obj).length === 0;
+
+// 播放模式
+export const playMode = {
+  sequence: 0,
+  loop: 1,
+  random: 2
+};
