@@ -16,7 +16,7 @@ import { HEADER_HEIGHT } from '../../api/config';
 
 function Album(props) {
   // console.log('props: ', props);
-  debugger;
+  // debugger;
   const [ showStatus, setShowStatus ] = useState(true);
   const [ title, setTitle ] = useState("歌单");
   const musicNoteRef = useRef();

@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 import * as actionTypes from './constants';
 import { fromJS} from 'immutable';
-import  playMode from '../../../api/utils';
+import { playMode } from '../../../api/utils';
 
 const defaultState = fromJS({
   fullScreen: false, // 播放器是否为全屏模式
@@ -23,7 +23,7 @@ export default (state = defaultState, action) => {
       return state.set('fullScreen', action.data);
     case actionTypes.SET_PLAYING_STATE:
       return state.set('playing', action.data);
-    case actionTypes.SET_SEQUECE_PLAYLIST:
+    case actionTypes.SET_SEQUENCE_PLAYLIST:
       return state.set('sequencePlayList', action.data);
     case actionTypes.SET_PLAYLIST:
       return state.set('playList', action.data);
