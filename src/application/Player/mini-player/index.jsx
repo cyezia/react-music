@@ -1,9 +1,10 @@
 import React from 'react';
 import {getName} from '../../../api/utils';
 import { MiniPlayerContainer } from './style';
+import ProgressCircle from '../../../baseUI/progress-circle';
 
 function MiniPlayer(props) {
-  const { song } = props;
+  const { song, precent } = props;
   return (
       <MiniPlayerContainer>
         <div className="icon">
@@ -16,7 +17,9 @@ function MiniPlayer(props) {
           <p className="desc">{getName(song.ar)}</p>
         </div>
         <div className="control">
-          <i className="iconfont">&#xe650;</i>
+          <ProgressCircle radius={32} precent={precent}>
+            <i className="icon-mini iconfont icon-pause">&#xe650;</i>
+          </ProgressCircle>
         </div>
         <div className="control">
           <i className="iconfont">&#xe640;</i>

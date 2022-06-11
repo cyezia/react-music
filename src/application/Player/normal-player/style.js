@@ -10,7 +10,7 @@ const rotate = keyframes`
   100%{
     transform: rotate(360deg);
   }
-`
+`;
 
 export const NormalPlayerContainer = styled.div`
   position: fixed;
@@ -57,7 +57,7 @@ export const NormalPlayerContainer = styled.div`
   &.normal-exit-active {
     opacity: 0;
   }
-`
+`;
 
 export const Top = styled.div`
   box-sizing: border-box;
@@ -99,7 +99,7 @@ export const Top = styled.div`
     color: ${style["font-color-desc-v2"]};
     ${style.noWrap()}; // 规定表格单元格中的内容不换行
   }
-`
+`;
 
 export const Middle = styled.div`
   position: fixed;
@@ -125,7 +125,7 @@ export const Middle = styled.div`
   .fade-exit-done {
     opacity: 0;
   }
-`
+`;
 
 export const CDWrapper = styled.div`
   margin: auto;
@@ -189,5 +189,68 @@ export const CDWrapper = styled.div`
     white-space: normal;
     text-align: center;
     color: rgba(255, 255, 255, 0.5);
+  }
+`;
+
+export const Bottom = styled.div`
+  position: absolute;
+  bottom: 50px;
+  width: 100%;
+`;
+
+export const Operators = styled.div`
+  display: flex;
+  align-items: center;
+  .icon {
+    font-weight: 300;
+    flex: 1;
+    color: ${style["font-color-desc"]};
+    &.disable {
+      color: ${style["theme-color-shadow"]};
+    }
+    i {
+      font-weight: 300;
+      font-size: 30px;
+    }
+  }
+  .i-left {
+    text-align: right;
+  }
+  .i-center {
+    padding: 0 20px;
+    text-align: center;
+    i {
+      font-size: 40px;
+    }
+  }
+  .i-right {
+    text-align: left;
+  }
+  .icon-favorite {
+    color: ${style["theme-color"]};
+  }
+`;
+
+export const ProgressWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 80%;
+  margin: 0px auto;
+  padding: 10px 0;
+  .time {
+    color: ${style["font-color-desc"]};
+    font-size: ${style["font-size-s"]};
+    flex: 0 0 30px;
+    line-height: 30px;
+    width: 30px;
+    &.time-l {
+      text-align: left;
+    }
+    &.time-r {
+      text-align: right;
+    }
+  }
+  .progress-bar-wrapper {
+    flex: 1;
   }
 `
