@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import style from '../../assets/global-style';
+import { prefixStyle } from '../../api/utils';
 
 const ProgressBarWrapper = styled.div`
   height: 30px;
@@ -8,7 +9,7 @@ const ProgressBarWrapper = styled.div`
     position: relative;
     top: 13px;
     height: 4px;
-    background: rgba (0, 0, 0, .3);
+    background: rgba(0, 0, 0, .3);
     .progress {
       position: absolute;
       height: 100%;
@@ -41,6 +42,7 @@ function ProgressBar (props) {
   const progressBtn = useRef ();
   const [touch, setTouch] = useState({});
   const { percent } = props;
+  const transform = prefixStyle('transform');
 
   const progressBtnWidth = 16;
 
@@ -49,24 +51,52 @@ function ProgressBar (props) {
       const barWidth = progressBar.current.clientWidth - progressBtnWidth;
       const offsetWidth = percent * barWidth;
       progress.current.style.width = `${offsetWidth}px`;
-      
+      progressBtn.current.style[transform] = `translate3d(${offsetWidth}px, 0, 0)`;
     }
-  })
+  }, [percent])
 
   // 处理进度条的偏移
   const _offset = (offsetWidth) => {
-
-  }
-  const progressTouchStart = () => {
-
+    progress.current.style.width = `${offsetWidth}px`;
+    progressBtn.current.style.transform = `translate3d(${offsetWidth}px, 0, 0)`;
   }
 
-  const progressTouchMove =() => {
-
+  const _changePercent = () => {
+    const barWidth = progressBar.current.clientWidth - progressBtnWidth;
+    const curPercent = progress.current.clientWidth / barWidth; // 新的进度计算
+    props.percentChange(curPercent); // 把新的进度传递给回调函数并执行
   }
 
-  const progressTouchEnd = () => {
+  // 绑定点击事件
+  const progressClick = (e) => {
+    const rect = progressBar.current.getBoundingClientRect();
+    const offsetWidth = e.pageX - rect.left;
+    _offset(offsetWidth);
+    _changePercent(percent);
+    
+  }
+  const progressTouchStart = (e) => {
+    const startTouch = {};
+    startTouch.initiated = true; // initiated为true表示滑动动作开始了
+    startTouch.startX = e.touches[0].pageX; // 滑动开始的横向坐标
+    startTouch.left = progress.current.clientWidth; // 当前的progress长度
+    setTouch(startTouch);
+  }
 
+  const progressTouchMove = (e) => {
+    if(!touch.initiated) return;
+    // 滑动距离
+    const deltaX = e.touches[0].pageX - touch.startX;
+    const barWidth = progressBar.current.clientWidth - progressBtnWidth; 
+    const offsetWidth = Math.min(Math.max(0, touch.left + deltaX), barWidth);
+    _offset(offsetWidth);
+  }
+
+  const progressTouchEnd = (e) => {
+    const endTouch = JSON.parse(JSON.stringify(touch));
+    endTouch.initiated = false;
+    setTouch(endTouch);
+    _changePercent();
   }
 
   return (

@@ -1,12 +1,28 @@
-import React from 'react';
-import { getName } from '../../../api/utils';
+import React, { useRef } from 'react';
+import { getName, prefixStyle } from '../../../api/utils';
 import { NormalPlayerContainer, Top, Middle, Bottom, CDWrapper, Operators, ProgressWrapper } from './style';
 import ProgressBar from '../../../baseUI/progress-bar/index';
+import { CSSTransition } from 'react-transition-group';
+import animations from 'create-keyframe-animation';
 
 function NormalPlayer (props) {
-  const { song } =  props;
+  // debugger;
+  const { song, fullScreen } =  props;
+  const { toggleFullScreenDispatch } = props;
+
+  // 处理transform的浏览器兼容性问题
+  const transform = prefixStyle("transform");
+
+  const normalPlayerRef = useRef();
+  const cdWrapperRef = useRef();
+
   return (
-    <NormalPlayerContainer>
+    <CSSTransition
+      className="normal"
+      in={fullScreen}
+      timeout={400}
+    >
+      <NormalPlayerContainer>
       <div className="background">
         <img src={song.al.picUrl + "?param=300x300"} width="100%" height="100%" alt="歌曲图片" />
       </div>
@@ -15,8 +31,10 @@ function NormalPlayer (props) {
         <div className="back">
           <i className="iconfont icon-back">&#xe662;</i>
         </div>
-        <h1 className="title">{song.name}</h1>
-        <h1 className="subtitle">{getName(song.ar)}</h1>
+        <div className="text">
+          <h1 className="title">{song.name}</h1>
+          <h1 className="subtitle">{getName(song.ar)}</h1>
+        </div>
       </Top>
       <Middle>
         <CDWrapper>
@@ -52,6 +70,8 @@ function NormalPlayer (props) {
         </Operators>
       </Bottom>
     </NormalPlayerContainer>
+    </CSSTransition>
+    
   );
 }
 export default React.memo (NormalPlayer);

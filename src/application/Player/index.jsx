@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import MiniPlayer from './mini-player';
+import NormalPlayer from './normal-player/index';
 import {
   changePlayingState,
   changeShowPlayList,
@@ -11,16 +12,42 @@ import {
   changeFullScreen,
   changeSpeed
 } from "./store/actionCreators";
+import { isEmptyObject } from '../../api/utils';
 
 function Player(props) {
+  const { fullScreen, playing } = props;
+  const { togglePlayingDispatch, togglePlayListDispatch, toggleFullScreenDispatch } = props;
+
   const currentSong = {
     al: { picUrl: "https://p1.music.126.net/JL_id1CFwNJpzgrXwemh4Q==/109951164172892390.jpg" },
     name: "木偶人",
     ar: [{name: "薛之谦"}]
   }
+
+  const clickPlaying = (e, state) => {
+    e.stopPropagation();
+    togglePlayingDispatch(state);
+  }
   return(
     <div>
-      <MiniPlayer song={currentSong} />
+      { isEmptyObject(currentSong) ? null : (
+        <NormalPlayer
+        song={currentSong}
+        fullScreen={fullScreen}
+        playing={playing}
+        toggleFullScreenDispatch={toggleFullScreenDispatch}
+        clickPlaying={clickPlaying}
+      ></NormalPlayer>
+      )}
+      { isEmptyObject(currentSong) ? null : (
+        <MiniPlayer 
+        song={currentSong} 
+        fullScreen={fullScreen} 
+        playing={playing} 
+        clickPlaying={clickPlaying}
+        setFullScreen={toggleFullScreenDispatch}
+      ></MiniPlayer>
+      )}
     </div>
   )
 }

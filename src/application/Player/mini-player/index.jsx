@@ -1,15 +1,35 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {getName} from '../../../api/utils';
 import { MiniPlayerContainer } from './style';
 import ProgressCircle from '../../../baseUI/progress-circle';
+import { useCallback } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 function MiniPlayer(props) {
-  const { song, precent } = props;
+  // debugger;
+  const { song, precent, fullScreen, playing } = props;
+  const { clickPlaying, setFullScreen, togglePlayList } = props;
+  const miniPlayerRef = useRef();
+  const miniWrapperRef = useRef();
+  const miniImageRef = useRef();
+
+  const handleTogglePlayList = useCallback((e) => {
+    togglePlayList(true);
+    e.stopPropagation();
+  }, [togglePlayList]);
+
   return (
-      <MiniPlayerContainer>
+    <CSSTransition
+      in={!fullScreen} 
+      timeout={400} 
+      classNames="mini" 
+      onEnter={() => { miniPlayerRef.current.style.display = "flex"; }}
+      onExited={() => { miniPlayerRef.current.style.display = "none"; }}
+    >
+      <MiniPlayerContainer ref={miniPlayerRef} onClick={() => setFullScreen(true)}>
         <div className="icon">
-          <div className="imgWrapper">
-            <img className="play" src={song.al.picUrl} width="40" height="40" alt="img" />
+          <div className="imgWrapper" ref={miniWrapperRef}>
+            <img className={`play ${playing ? "": "pause"}`} ref={miniImageRef} src={song.al.picUrl} width="40" height="40" alt="img" />
           </div>
         </div>
         <div className="text">
@@ -18,13 +38,18 @@ function MiniPlayer(props) {
         </div>
         <div className="control">
           <ProgressCircle radius={32} precent={precent}>
-            <i className="icon-mini iconfont icon-pause">&#xe650;</i>
+            { playing ? 
+              <i className="icon-mini iconfont icon-pause" onClick={e => clickPlaying(e, false)}>&#xe650;</i>
+              :
+              <i className="icon-mini iconfont icon-play" onClick={e => clickPlaying(e, true)}>&#xe61e;</i>
+            }
           </ProgressCircle>
         </div>
-        <div className="control">
+        <div className="control" onClick={handleTogglePlayList}>
           <i className="iconfont">&#xe640;</i>
         </div>
       </MiniPlayerContainer>
+    </CSSTransition>
   )
 }
 

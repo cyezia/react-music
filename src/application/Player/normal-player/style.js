@@ -60,7 +60,7 @@ export const NormalPlayerContainer = styled.div`
 `;
 
 export const Top = styled.div`
-  box-sizing: border-box;
+  /* box-sizing: border-box;
   position: absolute;
   display: flex;
   align-items: center;
@@ -68,9 +68,14 @@ export const Top = styled.div`
   border-bottom: 1px solid ${style["border-color-v2"]};
   padding-bottom: 5px;
   width: 100%;
-  height: 8%;
+  height: 8%; */
+  position: relative;
+  margin-bottom: 25px;
   .back {
-    margin-left: 5px;
+    position: absolute;
+    /* margin-left: 5px; */
+    top: 0;
+    left: 6px;
     z-index: 50;
     .iconfont {
       display: block;
@@ -81,20 +86,24 @@ export const Top = styled.div`
       transform: rotate(90deg);
     }
   }
-  .text{
+  /* .text{
     flex: 1;
     display: flex;
     flex-direction: column;
     margin-top: 10px;
-  }
+  } */
   .title {
-    line-height: 25px;
+    width: 70%;
+    margin: 0 auto;
+    line-height: 40px;
+    text-align: center;
     font-size: ${style["font-size-l"]};
     color: ${style["font-color-desc"]};
     ${style.noWrap()};
   }
   .subtitle {
     line-height: 20px;
+    text-align: center;
     font-size: ${style["font-size-m"]};
     color: ${style["font-color-desc-v2"]};
     ${style.noWrap()}; // 规定表格单元格中的内容不换行
@@ -154,7 +163,7 @@ export const CDWrapper = styled.div`
   }
   .cd {
     top: 16%;
-    position: absoluta;
+    position: absolute;
     width: 70%;
     height: 70vw;
     background-image: url(${disc});
@@ -167,14 +176,14 @@ export const CDWrapper = styled.div`
       right: 0;
       top: 0;
       bottom: 0;
-      width: 68%;
-      height: 68%;
+      width: 98%;
+      height: 98%;
       margin: auto;
       border-radius: 50%;
     }
     .play {
       animation: ${rotate} 20s linear infinite;
-      &.pause {
+      &.pause{
         animation-play-state: paused;
       }
     }
@@ -189,6 +198,28 @@ export const CDWrapper = styled.div`
     white-space: normal;
     text-align: center;
     color: rgba(255, 255, 255, 0.5);
+  }
+`;
+
+export const LyricWrapper = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  p {
+    line-height: 32px;
+    color: rgba(255, 255, 255, 0.5);
+    white-space: normal;
+    font-size: ${style["font-size-l"]};
+    &.current {
+      color: #fff;
+    }
+    &.pure {
+      position: relative;
+      top: 30px;
+    }
   }
 `;
 
@@ -253,4 +284,34 @@ export const ProgressWrapper = styled.div`
   .progress-bar-wrapper {
     flex: 1;
   }
-`
+`;
+
+export const List = styled.div`
+  width: 70%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  justify-content: space-around;
+  overflow: hidden;
+  >span:first-of-type{
+    display: block;
+    flex: 0 0 auto;
+    padding: 5px 0;
+    color: ${style["font-color-desc-v2"]};
+    font-size: ${style["font-size-m"]};
+  }
+`;
+
+export const ListItem = styled.span`
+  flex: 0 0 auto;
+  font-size: ${style["font-size-m"]};
+  padding: 5px 5px;
+  border-radius: 10px;
+  color: ${style["font-color-desc-v2"]};
+  &.selected{
+    color: ${style["theme-color"]};
+    border: 1px solid ${style["theme-color"]};
+    opacity: 0.8;
+  }
+`;
