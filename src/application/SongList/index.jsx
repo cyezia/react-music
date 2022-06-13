@@ -9,7 +9,7 @@ const SongsList = React.forwardRef((props, refs)=> {
   const totalCount = songs.length;
 
   const selectItem = (e, index) => {
-    console.log (index);
+    console.log(index);
   }
 
   let songList = (list) => {
@@ -17,12 +17,12 @@ const SongsList = React.forwardRef((props, refs)=> {
     for (let i = 0; i < list.length; i++) {
       let item = list[i];
       res.push (
-        <li key={item.id} onClick={(e) => selectItem (e, i)}>
+        <li key={item.id} onClick={(e) => selectItem(e, i)}>
           <span className="index">{i + 1}</span>
           <div className="info">
             <span>{item.name}</span>
             <span>
-              { item.ar ? getName (item.ar): getName (item.artists) } - { item.al ? item.al.name : item.album.name}
+              { item.ar ? getName(item.ar): getName(item.artists) } - { item.al ? item.al.name : item.album.name}
             </span>
           </div>
         </li>
@@ -44,15 +44,15 @@ const SongsList = React.forwardRef((props, refs)=> {
       <div className="first_line">
         <div className="play_all" onClick={(e) => selectItem (e, 0)}>
           <i className="iconfont">&#xe6e3;</i>
-          <span > 播放全部 <span className="sum">(共 {totalCount} 首)</span></span>
+          <span> 播放全部 <span className="sum">(共 {totalCount} 首)</span></span>
         </div>
-        { showCollect ? collect (collectCount) : null}
+        { showCollect ? collect(collectCount) : null}
       </div>
       <SongItem>
-        { songList (songs) }
+        { songList(songs) }
       </SongItem>
     </SongList>
   )
 });
 
-export default React.memo (SongsList);
+export default React.memo(SongsList);

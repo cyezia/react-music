@@ -13,6 +13,7 @@ function MiniPlayer(props) {
   const miniWrapperRef = useRef();
   const miniImageRef = useRef();
 
+  // 全屏播放列表
   const handleTogglePlayList = useCallback((e) => {
     togglePlayList(true);
     e.stopPropagation();
@@ -26,9 +27,11 @@ function MiniPlayer(props) {
       onEnter={() => { miniPlayerRef.current.style.display = "flex"; }}
       onExited={() => { miniPlayerRef.current.style.display = "none"; }}
     >
+      {/* 点击切换全屏 */}
       <MiniPlayerContainer ref={miniPlayerRef} onClick={() => setFullScreen(true)}>
         <div className="icon">
           <div className="imgWrapper" ref={miniWrapperRef}>
+            {/* 暂停的时候唱片也停止转动 */}
             <img className={`play ${playing ? "": "pause"}`} ref={miniImageRef} src={song.al.picUrl} width="40" height="40" alt="img" />
           </div>
         </div>

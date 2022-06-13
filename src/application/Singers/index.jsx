@@ -9,6 +9,7 @@ import Loading from '../../baseUI/loading/index';
 import { renderRoutes } from 'react-router-config';
 
 function Singers(props){
+  // debugger;
   const scrollRef = useRef(null);
 
   const { singerList, category, alpha, page, songs, pullUpLoading, pullDownLoading, enterLoading } = props;

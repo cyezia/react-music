@@ -17,7 +17,7 @@ const ProgressBarWrapper = styled.div`
     }
     .progress-btn-wrapper {
       position: absolute;
-      left: -15px;
+      left: -8px;
       top: -13px;
       width: 30px;
       height: 30px;
@@ -53,6 +53,7 @@ function ProgressBar (props) {
       progress.current.style.width = `${offsetWidth}px`;
       progressBtn.current.style[transform] = `translate3d(${offsetWidth}px, 0, 0)`;
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [percent])
 
   // 处理进度条的偏移
@@ -101,7 +102,7 @@ function ProgressBar (props) {
 
   return (
     <ProgressBarWrapper>
-      <div className="bar-inner" ref={progressBar}>
+      <div className="bar-inner" ref={progressBar} onClick={progressClick}>
         <div className="progress" ref={progress}></div>
         <div className="progress-btn-wrapper" ref={progressBtn}
           onTouchStart={progressTouchStart}

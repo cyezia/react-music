@@ -8,10 +8,11 @@ import { HEADER_HEIGHT } from "./../../api/config";
 import { changeEnterLoading, getSingerInfo } from './store/actionCreators';
 import { connect } from 'react-redux';
 import Loading from '../../baseUI/loading/index';
+import { EnterLoading } from '../Singers/style';
 
 function Singer(props) {
   // debugger;
-  const [showStatus, setShowStatus] = useState(true);
+  
   // mock数据
   // const artist = {
   //   picUrl: "https://p2.music.126.net/W__FCWFiyq0JdPtuLJoZVQ==/109951163765026271.jpg",
@@ -34,23 +35,25 @@ function Singer(props) {
   //   ]
   // }
 
+  // 图片初始高度
+  const initialHeight = useRef(0);
+  const [showStatus, setShowStatus] = useState(true);
+  // 往上偏移的尺寸，漏出圆角
+  const OFFSET = 5;
+  const { artist: immutableArtist, songs: immutableSongs, loading, songsCount } = props;
+  const { getSingerDataDispatch } = props;
+
+  const artist = immutableArtist.toJS();
+  const songs = immutableSongs.toJS();
+  // console.log('songs: ', songs);
+
   const collectButton = useRef();
   const imageWrapper = useRef();
   const songScrollWrapper = useRef();
   const songScroll = useRef();
   const header = useRef();
   const layer = useRef();
-  // 图片初始高度
-  const initialHeight = useRef(0);
-  // 往上偏移的尺寸，漏出圆角
-  const OFFSET = 5;
-
-  const { artist: immutableArtist, songs: immutableSongs, loading, songsCount } = props;
-  const { getSingerDataDispatch } = props;
-
-  const artist = immutableArtist.toJS();
-  const songs = immutableSongs.toJS();
-
+  
   useEffect(() => {
     // debugger;
     const id = props.match.params.id;
@@ -129,16 +132,21 @@ function Singer(props) {
           <i className="iconfont">&#xe62d;</i>
           <span className="text">收藏</span>
         </CollectButton>
-        {/* <BgLayer></BgLayer> */}
-        <SongListWrapper ref={songScrollWrapper}>
+        <BgLayer ref={layer}></BgLayer>
+        <SongListWrapper ref={songScrollWrapper} play={songsCount}>
           <Scroll onScroll={handleScroll} ref={songScroll}>
             <SongsList
-              songs={artist.hotSongs}
+              songs={songs}
               showCollect={false}
+              usePageSplit={false}
             ></SongsList>
           </Scroll>
         </SongListWrapper>
-        { loading ? (<Loading></Loading>) : null}
+        { loading ? (
+          <EnterLoading style={{ zIndex: 100 }}>
+            <Loading></Loading>
+          </EnterLoading>
+        ) : null}
       </Container>
     </CSSTransition>
   )

@@ -19,6 +19,7 @@ export const NormalPlayerContainer = styled.div`
   top: 0;
   bottom: 0;
   z-index: 150;
+  display: none;
   background: ${style["background-color"]};
   .background {
     position: absolute;
