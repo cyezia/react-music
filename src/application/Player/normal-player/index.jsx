@@ -1,5 +1,5 @@
 import React, { useRef, useState, useCallback } from 'react';
-import { getName, prefixStyle } from '../../../api/utils';
+import { getName, prefixStyle, formatPlayTime } from '../../../api/utils';
 import { NormalPlayerContainer, Top, Middle, Bottom, CDWrapper, Operators, ProgressWrapper } from './style';
 import ProgressBar from '../../../baseUI/progress-bar/index';
 import { CSSTransition } from 'react-transition-group';
@@ -7,8 +7,8 @@ import animations from 'create-keyframe-animation';
 
 function NormalPlayer (props) {
   // debugger;
-  const { song, fullScreen, playing } =  props;
-  const { clickPlaying, toggleFullScreenDispatch } = props;
+  const { song, fullScreen, playing, percent, duration, currentTime } =  props;
+  const { clickPlaying, toggleFullScreenDispatch, togglePlayListDispatch, onProgressChange } = props;
 
   // 处理transform的浏览器兼容性问题
   const transform = prefixStyle("transform");
@@ -122,14 +122,14 @@ function NormalPlayer (props) {
       </Middle>
       <Bottom className="bottom">
         <ProgressWrapper>
-          <span className="time time-l">0:00</span>
+          <span className="time time-l">{formatPlayTime(currentTime)}</span>
           <div className="progress-bar-wrapper">
-            <ProgressBar percent={0.2}></ProgressBar>
+            <ProgressBar percent={percent} percentChange={onProgressChange}></ProgressBar>
           </div>
-          <div className="time time-r">4:17</div>
+          <div className="time time-r">{formatPlayTime(duration)}</div>
         </ProgressWrapper>
         <Operators>
-          <div className="icon i-left" >
+          <div className="icon i-left">
             <i className="iconfont">&#xe625;</i>
           </div>
           <div className="icon i-left">
@@ -148,7 +148,7 @@ function NormalPlayer (props) {
           <div className="icon i-right">
             <i className="iconfont">&#xe718;</i>
           </div>
-          <div className="icon i-right">
+          <div className="icon i-right" onClick={() => togglePlayListDispatch(true)}>
             <i className="iconfont">&#xe640;</i>
           </div>
         </Operators>

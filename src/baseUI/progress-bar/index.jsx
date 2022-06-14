@@ -46,6 +46,7 @@ function ProgressBar (props) {
 
   const progressBtnWidth = 16;
 
+  // 监听percent
   useEffect(() => {
     if(percent >= 0 && percent <= 1 && !touch.initiated) {
       const barWidth = progressBar.current.clientWidth - progressBtnWidth;
@@ -68,7 +69,7 @@ function ProgressBar (props) {
     props.percentChange(curPercent); // 把新的进度传递给回调函数并执行
   }
 
-  // 绑定点击事件
+  // 绑定点击事件，点击和滑动结束事件改变percent
   const progressClick = (e) => {
     const rect = progressBar.current.getBoundingClientRect();
     const offsetWidth = e.pageX - rect.left;

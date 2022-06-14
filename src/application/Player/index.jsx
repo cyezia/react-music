@@ -40,6 +40,8 @@ function Player(props) {
   const playList = immutablePlayList.toJS();
   const sequencePlayList = immutableSequencePlayList.toJS();
   const currentSong = immutableCurrentSong.toJS();
+  // console.log('currentSong: ', currentSong);
+
   const [preSong, setPreSong] = useState({});
 
   const audioRef = useRef();
@@ -53,6 +55,19 @@ function Player(props) {
     togglePlayingDispatch(state);
   }
   // console.log('currentSong :>> ', currentSong);
+
+  // 进度条被点击或滑动时改变percent的回调函数
+  const onProgressChange = curPercent => {
+    const newTime = curPercent * duration;
+    setCurrentTime(newTime);
+    audioRef.current.currentTime = newTime;
+    if(!playing) {
+      togglePlayingDispatch(true);
+    }
+    if(currentLyric.current) {
+      currentLyric.current.seek(newTime * 1000);
+    }
+  };
 
   useEffect(() => {
     if (
@@ -98,6 +113,7 @@ function Player(props) {
         duration={duration} // 总时长
         currentTime={currentTime} // 播放时间
         percent={percent} // 进度
+        onProgressChange={onProgressChange}
         toggleFullScreenDispatch={toggleFullScreenDispatch}
         clickPlaying={clickPlaying}
       ></NormalPlayer>
@@ -107,6 +123,7 @@ function Player(props) {
         song={currentSong} 
         fullScreen={fullScreen} 
         playing={playing} 
+        percent={percent}
         clickPlaying={clickPlaying}
         setFullScreen={toggleFullScreenDispatch}
       ></MiniPlayer>
