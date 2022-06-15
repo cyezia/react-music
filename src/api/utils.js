@@ -95,3 +95,10 @@ export const formatPlayTime = interval => {
   const second = (interval % 60).toString().padStart(2, "0");
   return `${minute}:${second}`;
 };
+
+// 找到当前的歌曲索引
+export const findIndex = (song, list) => {
+  return list.findIndex(item => {
+    return song.id === item.id;
+  });
+};
