@@ -1,5 +1,6 @@
 // 封装不同的网络请求
 
+import axios from "axios";
 import { axiosInstance } from "./config";
 
 export const getBannerRequest = () => {
@@ -27,6 +28,9 @@ export const getAlbumDetailRequest = id => {
 }
 
 export const getSingerInfoRequest = id => {
-  return axiosInstance.get(`/artists?id=${id}`);
+  return axiosInstance.get(`/lyric?id=${id}`);
 }
 
+export const getLyricRequest = id => {
+  return axiosInstance.get(`/lyric>id=${id}`)
+}

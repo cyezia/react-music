@@ -14,6 +14,8 @@ import {
 } from "./store/actionCreators";
 import { isEmptyObject, getSongUrl } from '../../api/utils';
 import PlayList from './play-list/index';
+import { getLyricRequest } from '../../api/request';
+import Lyric from '../../api/lyric-parser';
 
 function Player(props) {
   // debugger;
@@ -97,6 +99,49 @@ function Player(props) {
     playing ? audioRef.current.play() : audioRef.current.pause();
   }, [playing]);
   
+  useEffect(() => {
+    if (!fullScreen) return;
+    if (currentLyric.current && currentLyric.current.lines.length) {
+      handleLyric({
+        lineNum: currentLineNum.current,
+        txt: currentLyric.current.lines[currentLineNum.current].txt
+      });
+    }
+  }, [fullScreen]);
+
+  const handleLyric = ({ lineNum, txt }) => {
+    if(!currentLyric.current) return;
+    currentLineNum.current = lineNum;
+    setPlayingLyric(txt);
+  };
+
+  const getLyric = id => {
+    let lyric = "";
+    if(currentLyric.current) {
+      currentLyric.current.stop();
+    }
+    // 避免songReady恒为false的情况
+    setTimeout(() => {
+      songReady.current = true;
+    }, 3000);
+    getLyricRequest(id)
+      .then(data => {
+        lyric = data.lrc && data.lrc.lyric;
+        if(!lyric) {
+          currentLyric.current = null;
+          return;
+        }
+        currentLyric.current = new Lyric(lyric, handleLyric, speed);
+        currentLyric.current.play();
+        currentLineNum.current = 0;
+        currentLyric.current.seek(0);
+      })
+      .catch(() => {
+        currentLyric.current = "";
+        songReady.current = true;
+        audioRef.current.play();
+      });
+  };
 
   // audio标签在播放过程中会不断的触发onTimeUpdate 在此处需要更新updateTime
   const updateTime = e => {
