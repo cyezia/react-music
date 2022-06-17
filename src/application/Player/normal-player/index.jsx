@@ -1,21 +1,58 @@
 import React, { useRef, useState, useCallback } from 'react';
-import { getName, prefixStyle, formatPlayTime } from '../../../api/utils';
-import { NormalPlayerContainer, Top, Middle, Bottom, CDWrapper, Operators, ProgressWrapper } from './style';
+import { getName, prefixStyle, formatPlayTime, playMode } from '../../../api/utils';
+import { NormalPlayerContainer, Top, Middle, Bottom, CDWrapper, Operators, ProgressWrapper, LyricContainer, LyricWrapper, List, ListItem } from './style';
 import ProgressBar from '../../../baseUI/progress-bar/index';
 import { CSSTransition } from 'react-transition-group';
 import animations from 'create-keyframe-animation';
+import Scroll from '../../../baseUI/scroll/index';
+import { list } from '../../../api/config';
 
 function NormalPlayer (props) {
   // debugger;
-  const { song, fullScreen, playing, percent, duration, currentTime } =  props;
-  const { clickPlaying, toggleFullScreenDispatch, togglePlayListDispatch, onProgressChange } = props;
+  const { 
+    song, 
+    fullScreen, 
+    playing, 
+    percent, 
+    duration, 
+    currentTime, 
+    currentLineNum, 
+    currentPlayingLyric,
+    currentLyric,
+    mode,
+    speed
+  } =  props;
+  const { 
+    clickPlaying, 
+    toggleFullScreenDispatch, 
+    togglePlayListDispatch, 
+    onProgressChange,
+    changeMode,
+    handlePrev,
+    handleNext,
+    clickSpeed
+  } = props;
 
   // 处理transform的浏览器兼容性问题
   const transform = prefixStyle("transform");
 
   const normalPlayerRef = useRef();
+  const lyricScrollRef = useRef();
+  const lyricLineRefs = useRef([]);
   const cdWrapperRef = useRef();
   const [ currentState, setCurrentState ] = useState(0);
+
+  const getPlayMode = () => {
+    let content;
+    if(mode === playMode.sequence) {
+      content = "&#xe625;";
+    }else if(mode === playMode.loop) {
+      content = "&#xe653;";
+    }else {
+      content = "&#xe61b;";
+    }
+    return content;
+  }
 
   // 计算偏移的辅助函数
   const _getPosAndScale = () => {
@@ -85,6 +122,16 @@ function NormalPlayer (props) {
     setCurrentState("");
   };
 
+  const toggleCurrentState = () => {
+    let nextState = "";
+    if(currentState !== "lyric") {
+      nextState = "lyric";
+    }else {
+      nextState = "";
+    }
+    setCurrentState(nextState);
+  };
+
   const clickPlayingCB = useCallback((e) => {
     clickPlaying(e, !playing);
   }, [clickPlaying, playing]);
@@ -113,14 +160,76 @@ function NormalPlayer (props) {
           <h1 className="subtitle">{getName(song.ar)}</h1>
         </div>
       </Top>
-      <Middle ref={cdWrapperRef}>
-        <CDWrapper playing={playing}>
-          <div className="cd">
-            <img className={`image play ${playing ? '' : 'pause'}`} src={song.al.picUrl + "?param=400x400"} alt="" />
-          </div>
-        </CDWrapper>
+      <Middle ref={cdWrapperRef} onClick={toggleCurrentState}>
+        <CSSTransition
+          timeout={400}
+          classNames="fade"
+          in={currentState !== "lyric"}
+        >
+          <CDWrapper 
+            style={{visibility: currentState !== "lyric" ? "visible" : "hidden"}}
+            playing={playing}
+          >
+            <div className={`needle ${playing? '' : 'pause'}`}></div>
+            <div className="cd">
+              <img 
+                className={`image play ${playing ? '' : 'pause'}`} 
+                src={song.al.picUrl + "?param=400x400"} 
+                alt="" 
+              />
+            </div>
+            <p className="playing_lyric">{currentPlayingLyric}</p>
+          </CDWrapper>
+        </CSSTransition>
+        <CSSTransition
+          timeout={400}
+          classNames="fade"
+          in={currentState === "lyric"}
+        >
+          <LyricContainer>
+            <Scroll ref={lyricScrollRef}>
+              <LyricWrapper
+                style={{visibility: currentState === "lyric" ? "visible" : "hidden"}}
+                className="lyric_wrapper"
+              >
+                {
+                  currentLyric
+                  ? currentLyric.lines.map((item, index) => {
+                    lyricLineRefs.current[index] = React.createRef();
+                    return (
+                      <p
+                        className={`text ${currentLineNum === index ? "current" : ""}`}
+                        key={item + index}
+                        ref={lyricLineRefs.current[index]}
+                      >
+                        {item.txt}
+                      </p>
+                    );
+                  })
+                  : <p className="text pure">纯音乐，请欣赏。</p>
+                }
+              </LyricWrapper>
+            </Scroll>
+          </LyricContainer>
+        </CSSTransition>
       </Middle>
       <Bottom className="bottom">
+        <List>
+          <span>倍速听歌</span>
+          {
+            list.map((item) => {
+              return (
+                <ListItem
+                  key={item.key}
+                  className={`${speed === item.key ? 'selected': ''}`} 
+                  onClick={() => clickSpeed(item.key)}
+                >
+                  {item.name}
+                </ListItem>
+              )
+            })
+          }
+        </List>
         <ProgressWrapper>
           <span className="time time-l">{formatPlayTime(currentTime)}</span>
           <div className="progress-bar-wrapper">
@@ -129,10 +238,10 @@ function NormalPlayer (props) {
           <div className="time time-r">{formatPlayTime(duration)}</div>
         </ProgressWrapper>
         <Operators>
-          <div className="icon i-left">
-            <i className="iconfont">&#xe625;</i>
+          <div className="icon i-left" onClick={changeMode}>
+            <i className="iconfont" dangerouslySetInnerHTML={{__html: getPlayMode()}}>&#xe625;</i>
           </div>
-          <div className="icon i-left">
+          <div className="icon i-left" onClick={handlePrev}>
             <i className="iconfont">&#xe6e1;</i>
           </div>
           {/* 中间暂停按钮 */}
@@ -145,17 +254,16 @@ function NormalPlayer (props) {
               }}
             ></i>
           </div>
-          <div className="icon i-right">
+          <div className="icon i-right" onClick={handleNext}>
             <i className="iconfont">&#xe718;</i>
           </div>
           <div className="icon i-right" onClick={() => togglePlayListDispatch(true)}>
             <i className="iconfont">&#xe640;</i>
           </div>
-        </Operators>
-      </Bottom>
-    </NormalPlayerContainer>
+          </Operators>
+        </Bottom>
+      </NormalPlayerContainer>
     </CSSTransition>
-    
   );
 }
 export default React.memo (NormalPlayer);

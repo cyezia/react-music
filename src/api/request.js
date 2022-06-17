@@ -1,6 +1,5 @@
 // 封装不同的网络请求
 
-import axios from "axios";
 import { axiosInstance } from "./config";
 
 export const getBannerRequest = () => {

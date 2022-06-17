@@ -14,6 +14,7 @@ import {
 } from "./store/actionCreators";
 import { isEmptyObject, getSongUrl } from '../../api/utils';
 import PlayList from './play-list/index';
+import { playMode } from '../../api/config';
 import { getLyricRequest } from '../../api/request';
 import Lyric from '../../api/lyric-parser';
 
@@ -31,13 +32,29 @@ function Player(props) {
   const [ currentTime, setCurrentTime ] = useState(0);
   // 歌曲总时长
   const [ duration, setDuration ] = useState(0);
+  // 即时歌词
   const [ currentPlayingLyric, setPlayingLyric ] = useState("");
   const [ modeText, setModeText ] = useState("");
   // 歌曲播放进度
   let percent = isNaN(currentTime / duration) ? 0 : currentTime / duration;
 
-  const { speed, fullScreen, playing, currentIndex, currentSong:immutableCurrentSong, playList:immutablePlayList, mode, sequencePlayList: immutableSequencePlayList } = props;
-  const { togglePlayingDispatch, toggleFullScreenDispatch, changeCurrentIndexDispatch, changeCurrentDispatch } = props;
+  const { 
+    speed, 
+    fullScreen, 
+    playing, 
+    currentIndex, 
+    currentSong:immutableCurrentSong, 
+    playList:immutablePlayList, 
+    mode, 
+    sequencePlayList: immutableSequencePlayList 
+  } = props;
+  const { 
+    togglePlayingDispatch, 
+    togglePlayListDispatch,
+    toggleFullScreenDispatch, 
+    changeCurrentIndexDispatch, 
+    changeCurrentDispatch 
+  } = props;
 
   const playList = immutablePlayList.toJS();
   const sequencePlayList = immutableSequencePlayList.toJS();
@@ -49,16 +66,18 @@ function Player(props) {
   const audioRef = useRef();
 
   const currentLyric = useRef();
+  // 当前行数
   const currentLineNum = useRef(0);
   const songReady = useRef(true);
   
+  // 歌曲暂停
   const clickPlaying = (e, state) => {
     e.stopPropagation();
     togglePlayingDispatch(state);
   }
   // console.log('currentSong :>> ', currentSong);
 
-  // 进度条被点击或滑动时改变percent的回调函数
+  // 进度条被点击或滑动时改变percent的回调函数，歌曲进度更新
   const onProgressChange = curPercent => {
     const newTime = curPercent * duration;
     setCurrentTime(newTime);
@@ -156,10 +175,14 @@ function Player(props) {
         fullScreen={fullScreen}
         playing={playing}
         duration={duration} // 总时长
-        currentTime={currentTime} // 播放时间
         percent={percent} // 进度
+        currentTime={currentTime} // 播放时间
+        currentLyric={currentLyric.current}
+        currentPlayingLyric={currentPlayingLyric}
+        currentLineNum={currentLineNum.current}
         onProgressChange={onProgressChange}
         toggleFullScreenDispatch={toggleFullScreenDispatch}
+        togglePlayListDispatch={togglePlayListDispatch}
         clickPlaying={clickPlaying}
       ></NormalPlayer>
       )}
@@ -171,8 +194,10 @@ function Player(props) {
         percent={percent}
         clickPlaying={clickPlaying}
         setFullScreen={toggleFullScreenDispatch}
+        togglePlayList={togglePlayListDispatch}
       ></MiniPlayer>
       )}
+      <PlayList clearPreSong={setPreSong.bind(null, {})}></PlayList>
       <audio ref={audioRef} onTimeUpdate={updateTime}></audio>
     </div>
   )
