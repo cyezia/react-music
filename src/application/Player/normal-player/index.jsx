@@ -1,11 +1,23 @@
-import React, { useRef, useState, useCallback } from 'react';
-import { getName, prefixStyle, formatPlayTime, playMode } from '../../../api/utils';
-import { NormalPlayerContainer, Top, Middle, Bottom, CDWrapper, Operators, ProgressWrapper, LyricContainer, LyricWrapper, List, ListItem } from './style';
-import ProgressBar from '../../../baseUI/progress-bar/index';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import animations from 'create-keyframe-animation';
+import ProgressBar from '../../../baseUI/progress-bar/index';
 import Scroll from '../../../baseUI/scroll/index';
-import { list } from '../../../api/config';
+import { getName, prefixStyle, formatPlayTime, } from '../../../api/utils';
+import { list, playMode } from '../../../api/config';
+import { 
+  NormalPlayerContainer, 
+  Top, 
+  Middle, 
+  Bottom, 
+  CDWrapper, 
+  Operators, 
+  ProgressWrapper, 
+  LyricContainer, 
+  LyricWrapper, 
+  List, 
+  ListItem 
+} from './style';
 
 function NormalPlayer (props) {
   // debugger;
@@ -41,6 +53,20 @@ function NormalPlayer (props) {
   const lyricLineRefs = useRef([]);
   const cdWrapperRef = useRef();
   const [ currentState, setCurrentState ] = useState(0);
+
+  // 监听currentLine变量 当它改变时 进行歌词滚动操作
+  useEffect(() => {
+    if(!lyricScrollRef.current) return;
+    let bScroll = lyricScrollRef.current.getBScroll();
+    if(currentLineNum > 5) {
+      // 保持当前歌词在第5条的位置
+      let lineEl = lyricLineRefs.current[currentLineNum - 5].current;
+      bScroll.scrollToElement(lineEl, 1000);
+    }else {
+      // 当前歌词行数<=5 直接滚动到最顶端
+      bScroll.scrollTo(0, 0, 1000);
+    }
+  }, [currentLineNum]);
 
   const getPlayMode = () => {
     let content;
@@ -141,6 +167,7 @@ function NormalPlayer (props) {
       className="normal"
       in={fullScreen}
       timeout={400}
+      mountOnEnter
       onEnter={enter}
       onEntered={afterEnter}
       onExit={leave}
@@ -239,7 +266,10 @@ function NormalPlayer (props) {
         </ProgressWrapper>
         <Operators>
           <div className="icon i-left" onClick={changeMode}>
-            <i className="iconfont" dangerouslySetInnerHTML={{__html: getPlayMode()}}>&#xe625;</i>
+            <i 
+              className="iconfont" 
+              dangerouslySetInnerHTML={{__html: getPlayMode()}}
+            ></i>
           </div>
           <div className="icon i-left" onClick={handlePrev}>
             <i className="iconfont">&#xe6e1;</i>
@@ -266,4 +296,4 @@ function NormalPlayer (props) {
     </CSSTransition>
   );
 }
-export default React.memo (NormalPlayer);
+export default React.memo(NormalPlayer);

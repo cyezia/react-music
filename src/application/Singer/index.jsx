@@ -40,12 +40,18 @@ function Singer(props) {
   const [showStatus, setShowStatus] = useState(true);
   // 往上偏移的尺寸，漏出圆角
   const OFFSET = 5;
-  const { artist: immutableArtist, songs: immutableSongs, loading, songsCount } = props;
+  const { 
+    artist: immutableArtist, 
+    songs: immutableSongs, 
+    loading, 
+    songsCount 
+  } = props;
   const { getSingerDataDispatch } = props;
 
   const artist = immutableArtist.toJS();
+  console.log('artist: ', artist);
   const songs = immutableSongs.toJS();
-  // console.log('songs: ', songs);
+  console.log('songs: ', songs);
 
   const collectButton = useRef();
   const imageWrapper = useRef();

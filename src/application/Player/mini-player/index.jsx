@@ -1,14 +1,14 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import {getName} from '../../../api/utils';
 import { MiniPlayerContainer } from './style';
 import ProgressCircle from '../../../baseUI/progress-circle';
-import { useCallback } from 'react';
-import { CSSTransition } from 'react-transition-group';
 
 function MiniPlayer(props) {
   // debugger;
   const { song, precent, fullScreen, playing } = props;
   const { clickPlaying, setFullScreen, togglePlayList } = props;
+  
   const miniPlayerRef = useRef();
   const miniWrapperRef = useRef();
   const miniImageRef = useRef();
