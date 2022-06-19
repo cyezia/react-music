@@ -56,7 +56,7 @@ export default [
         ]
       },
       {
-        path: "album/:id",
+        path: "/album/:id",
         exact: true,
         key: "album",
         component: Album

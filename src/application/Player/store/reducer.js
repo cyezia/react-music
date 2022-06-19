@@ -95,7 +95,7 @@ export default (state = defaultState, action) => {
     case actionTypes.SET_SHOW_PLAYLIST:
       return state.set('showPlayList', action.data);
     case actionTypes.INSERT_SONG:
-      return state.set(state, action.data);
+      return handleInsertSong(state, action.data);
     case actionTypes.DELETE_SONG:
       return handleDeleteSong(state, action.data);
     case actionTypes.CHANGE_SPEED:
