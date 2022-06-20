@@ -37,6 +37,8 @@ function Player(props) {
   const [ modeText, setModeText ] = useState("");
   // 歌曲播放进度
   let percent = isNaN(currentTime / duration) ? 0 : currentTime / duration;
+  // console.log('percent: ', percent);
+
 
   const { 
     speed, 
@@ -48,6 +50,7 @@ function Player(props) {
     mode, 
     sequencePlayList: immutableSequencePlayList 
   } = props;
+
   const { 
     togglePlayingDispatch, 
     togglePlayListDispatch,

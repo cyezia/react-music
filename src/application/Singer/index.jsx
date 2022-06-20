@@ -46,6 +46,8 @@ function Singer(props) {
     loading, 
     songsCount 
   } = props;
+  console.log('immutableArtist: ', immutableArtist);
+  console.log('immutableSongs: ', immutableSongs);
   const { getSingerDataDispatch } = props;
 
   const artist = immutableArtist.toJS();

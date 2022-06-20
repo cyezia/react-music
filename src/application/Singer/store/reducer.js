@@ -9,6 +9,7 @@ const defaultState = fromJS({
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = defaultState, action) => {
+  console.log('artist: ', state.set('artist', action.data));
   switch(action.type) {
     case actionTypes.CHANGE_ARTIST:
       return state.set('artist', action.data);

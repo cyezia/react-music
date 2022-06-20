@@ -1,14 +1,16 @@
-import React, { useEffect, useState, useRef, memo } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Scroll from '../scroll/index';
 import { PropTypes } from 'prop-types';
 import { List, ListItem} from './style';
 
 
 function Horizen(props) {
+  const [refreshCategoryScroll, setRefreshCategoryScroll] = useState(false);
+  const Category = useRef(null);
+
   const { list, oldVal, title } = props;
   const { handleClick } = props;
 
-  const Category = useRef(null);
   // 初始化内容宽度逻辑
   useEffect(() => {
     let categoryDOM = Category.current;
@@ -19,10 +21,15 @@ function Horizen(props) {
     });
     totalWidth += 2;
     categoryDOM.style.width = `${totalWidth}px`
-  }, []);
+    setRefreshCategoryScroll(true);
+  }, [refreshCategoryScroll]);
+
+  const clickHandle = (item) => {
+    handleClick(item.key);
+  }
 
   return (
-    <Scroll direction={"horizental"}>
+    <Scroll direction={"horizental"} refresh={true}>
       <div ref={Category}>
         <List>
           <span>{title}</span>
@@ -31,9 +38,11 @@ function Horizen(props) {
               return (
                 <ListItem
                   key={item.key}
-                  className={`${oldVal === item.key ? 'selected' : ''}`}
-                  onclick={() => handleClick(item)}
-                >{item.name}</ListItem>
+                  className={oldVal === item.key ? 'selected' : ''}
+                  onclick={() => clickHandle(item)}
+                >
+                  {item.name}
+                </ListItem>
               )
             })
           }
@@ -50,15 +59,15 @@ function Horizen(props) {
 // handleCilck 点击不同的item执行的方法
 Horizen.defaultProps = {
   list: [],
-  oldVal: '',
-  title: '',
+  // oldVal: '',
+  // title: '',
   handleClick: null
 };
 
 Horizen.propTypes = {
   list: PropTypes.array,
-  oldVal: PropTypes.string,
-  title: PropTypes.string,
+  // oldVal: PropTypes.string,
+  // title: PropTypes.string,
   handleClick: PropTypes.func
 }
 

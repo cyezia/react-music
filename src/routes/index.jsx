@@ -18,10 +18,7 @@ export default [
       {
         path: "/",
         exact: true,  // exact 决定是否精准匹配
-        render: () => (
-          // 重定向到推荐页面
-          <Redirect to={"/recommend"} />
-        )
+        render: () => <Redirect to={"/recommend"} />  // 重定向到推荐页面
       },
       {
         path: "/recommend",

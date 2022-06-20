@@ -197,7 +197,7 @@ function NormalPlayer (props) {
             style={{visibility: currentState !== "lyric" ? "visible" : "hidden"}}
             playing={playing}
           >
-            <div className={`needle ${playing? '' : 'pause'}`}></div>
+            {/* <div className={`needle ${playing? '' : 'pause'}`}></div> */}
             <div className="cd">
               <img 
                 className={`image play ${playing ? '' : 'pause'}`} 

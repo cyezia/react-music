@@ -13,7 +13,6 @@ function Singers(props){
   const scrollRef = useRef(null);
 
   const { singerList, category, alpha, page, songs, pullUpLoading, pullDownLoading, enterLoading } = props;
-
   const { getHotSinger, updateCategory, updateAlpha, pullUpRefresh, pullDownRefresh } = props;
 
   useEffect(() => {
@@ -57,9 +56,9 @@ function Singers(props){
         {
           singerList.toJS().map((item, index) => {
             return (
-              <ListItem key={item.acId+""+index} onClick={() => enterDetail(item.id)}>
+              <ListItem key={item.acId + "" + index} onClick={() => enterDetail(item.id)}>
                 <div className="img_wrapper">
-                    <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music"/>
+                    <img src={`${item.picUrl}?param=300x300`} width="100%" height="100%" alt="music" />
                 </div>
                 <span className="name">{item.name}</span>
               </ListItem>
@@ -93,6 +92,7 @@ function Singers(props){
     </div>
   )
 }
+
 const mapStateToProps = (state) => ({
   alpha: state.getIn(['singers', 'alpha']),
   category: state.getIn(['singers', 'category']),
@@ -100,9 +100,10 @@ const mapStateToProps = (state) => ({
   enterLoading: state.getIn(['singers', 'enterLoading']),
   pullUpLoading: state.getIn(['singers', 'pullUpLoading']),
   pullDownLoading: state.getIn(['singers', 'pullDownLoading']),
-  // page: state.getIn(['singers', 'page']),
+  page: state.getIn(['singers', 'page']),
   songs: state.getIn(['player', 'playList'])
 });
+
 const mapDispatchToProps = (dispatch) => {
   return {
     getHotSinger() {
@@ -117,11 +118,11 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(getSingerList());
     },
     // 滑到最底部刷新部分的处理
-    pullUpRefresh(hot, ) {
+    pullUpRefresh(hot) {
       dispatch(changePullUpLoading(true));
       if(hot){
         dispatch(refreshMoreHotSingerList());
-      } else {
+      }else {
         dispatch(refreshMoreSingerList());
       }
     },
@@ -131,7 +132,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(changeListOffset(0));
       if(category === '' && alpha === ''){
         dispatch(getHotSingerList());
-      } else {
+      }else {
         dispatch(getSingerList());
       }
     }
