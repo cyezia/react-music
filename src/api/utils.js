@@ -96,12 +96,6 @@ export const formatPlayTime = interval => {
   return `${minute}:${second}`;
 };
 
-// 找到当前的歌曲索引
-export const findIndex = (song, list) => {
-  return list.findIndex(item => {
-    return song.id === item.id;
-  });
-};
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -120,3 +114,10 @@ export function shuffle(arr) {
   }
   return new_arr;
 }
+
+// 找到当前的歌曲索引
+export const findIndex = (song, list) => {
+  return list.findIndex(item => {
+    return song.id === item.id;
+  });
+};

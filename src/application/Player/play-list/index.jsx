@@ -12,8 +12,22 @@ import Confirm from '../../../baseUI/confirm/index';
 
 function PlayList(props) {
 
-  const { mode, currentIndex, currentSong:immutableCurrentSong, showPlayList, playList:immutablePlayList, sequencePlayList:immutableSequencePlayList } = props;
-  const { togglePlayListDispatch, changeCurrentIndexDispatch, changePlayListDispatch, changeModeDispatch, deleteSongDispatch, clearDispatch } = props;
+  const { 
+    mode, 
+    currentIndex, 
+    currentSong:immutableCurrentSong, 
+    showPlayList, 
+    playList:immutablePlayList, 
+    sequencePlayList:immutableSequencePlayList 
+  } = props;
+  const { 
+    togglePlayListDispatch, 
+    changeCurrentIndexDispatch, 
+    changePlayListDispatch, 
+    changeModeDispatch, 
+    deleteSongDispatch, 
+    clearDispatch 
+  } = props;
 
   const { clearPreSong } = props; // 清空PreSong
 

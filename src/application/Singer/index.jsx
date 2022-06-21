@@ -46,14 +46,14 @@ function Singer(props) {
     loading, 
     songsCount 
   } = props;
-  console.log('immutableArtist: ', immutableArtist);
-  console.log('immutableSongs: ', immutableSongs);
+  // console.log('immutableArtist: ', immutableArtist);
+  // console.log('immutableSongs: ', immutableSongs);
   const { getSingerDataDispatch } = props;
 
   const artist = immutableArtist.toJS();
-  console.log('artist: ', artist);
+  // console.log('artist: ', artist);
   const songs = immutableSongs.toJS();
-  console.log('songs: ', songs);
+  // console.log('songs: ', songs);
 
   const collectButton = useRef();
   const imageWrapper = useRef();

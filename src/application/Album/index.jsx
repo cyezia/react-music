@@ -12,15 +12,13 @@ import { EnterLoading } from './../Singers/style';
 import Loading from '../../baseUI/loading/index';
 import { HEADER_HEIGHT } from '../../api/config';
 
-
-
 function Album(props) {
   // console.log('props: ', props);
   // debugger;
   const [ showStatus, setShowStatus ] = useState(true);
   const [ title, setTitle ] = useState("歌单");
-  const musicNoteRef = useRef();
   const headerEl = useRef();
+  const musicNoteRef = useRef();
   // 从路由中拿到歌单的id
   const id = props.match.params.id;
 
@@ -29,7 +27,7 @@ function Album(props) {
 
   let currentAlbumJS = currentAlbum.toJS();
 
-  useEffect (() => {
+  useEffect(() => {
     getAlbumDataDispatch(id);
   }, [getAlbumDataDispatch, id]);
 
@@ -57,7 +55,7 @@ function Album(props) {
     setShowStatus(false);
   }, []);
 
-  const musicAnimation = (x , y) => {
+  const musicAnimation = (x, y) => {
     musicNoteRef.current.startAnimation({x, y});
   }
 
@@ -81,12 +79,11 @@ function Album(props) {
               pullUpLoading={pullUpLoading}
               bounceTop={false}
             >
-              <AlbumDetail currentAlbum={currentAlbumJS} pullUpLoading={pullUpLoading} musicAnimation={musicAnimation} ></AlbumDetail>
+              <AlbumDetail currentAlbum={currentAlbumJS} pullUpLoading={pullUpLoading} musicAnimation={musicAnimation}></AlbumDetail>
             </Scroll>
           ) : null
         }
-        { enterLoading ? <EnterLoading><Loading></Loading></EnterLoading> : null}
-        
+        { enterLoading ? <EnterLoading><Loading></Loading></EnterLoading> : null }
       </Container>
     </CSSTransition>
   );
@@ -105,7 +102,6 @@ const mapStateToProps = (state) => {
     startIndex: state.getIn(['album', 'startIndex']),
     totalCount: state.getIn(['album', 'totalCount']),
     songsCount: state.getIn(['player', 'playList']).size
-    
   })
 };
 

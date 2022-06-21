@@ -154,7 +154,7 @@ function Player(props) {
     e.stopPropagation();
     togglePlayingDispatch(state);
   }
-  // console.log('currentSong :>> ', currentSong);
+
 
   // 进度条被点击或滑动时改变percent的回调函数，歌曲进度更新
   const onProgressChange = curPercent => {
@@ -300,17 +300,20 @@ function Player(props) {
 }
 
 // 映射redux全局的state到组件的props上
-const mapStateToProps = state => ({
-  fullScreen: state.getIn(["player", "fullScreen"]),
-  playing: state.getIn(["player", "playing"]),
-  currentSong: state.getIn(["player", "currentSong"]),
-  showPlayList: state.getIn(["player", "showPlayList"]),
-  mode: state.getIn(["player", "mode"]),
-  speed: state.getIn(["player", "speed"]),
-  currentIndex: state.getIn(["player", "currentIndex"]),
-  playList: state.getIn(["player", "playList"]),
-  sequencePlayList: state.getIn(["player", "sequencePlayList"])
-});
+const mapStateToProps = state => {
+  // console.log('player: ', state.getIn(["player", "currentSong"]));
+  return({
+    fullScreen: state.getIn(["player", "fullScreen"]),
+    playing: state.getIn(["player", "playing"]),
+    currentSong: state.getIn(["player", "currentSong"]),
+    showPlayList: state.getIn(["player", "showPlayList"]),
+    mode: state.getIn(["player", "mode"]),
+    speed: state.getIn(["player", "speed"]),
+    currentIndex: state.getIn(["player", "currentIndex"]),
+    playList: state.getIn(["player", "playList"]),
+    sequencePlayList: state.getIn(["player", "sequencePlayList"])
+  })
+};
 
 // 映射dispatch到props上
 const mapDispatchToProps = dispatch => {

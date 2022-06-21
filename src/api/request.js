@@ -3,11 +3,11 @@
 import { axiosInstance } from "./config";
 
 export const getBannerRequest = () => {
-  return axiosInstance("/banner");
+  return axiosInstance.get("/banner");
 }
 
 export const getRecommendListRequest = () => {
-  return axiosInstance("/personalized");
+  return axiosInstance.get("/personalized");
 }
 
 export const getHotSingerListRequest = (count) => {
@@ -27,11 +27,11 @@ export const getAlbumDetailRequest = id => {
 }
 
 export const getSingerInfoRequest = id => {
-  return axiosInstance.get(`/lyric?id=${id}`);
+  return axiosInstance.get(`/artists?id=${id}`);
 }
 
 export const getLyricRequest = id => {
-  return axiosInstance.get(`/lyric>id=${id}`)
+  return axiosInstance.get(`/lyric?id=${id}`)
 }
 
 export const getSongDetailRequest = id => {
