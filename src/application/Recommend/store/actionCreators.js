@@ -4,6 +4,7 @@ import * as actionTypes from './constants';
 // 将JS对象转换成immutable对象
 import { fromJS } from 'immutable';
 import { getBannerRequest, getRecommendListRequest } from '../../../api/request';
+import { changeEnterLoading } from '../../Search/store/actionCreators';
 
 export const changeBannerList = (data) => ({
   type: actionTypes.CHANGE_BANNER,
@@ -29,6 +30,8 @@ export const getRecommendList = () => {
   return (dispatch) => {
     getRecommendListRequest().then(data => {
       dispatch(changeRecommendList(data.result));
+      // 获取推荐歌单后把loading状态改为false
+      dispatch(changeEnterLoading(false));
     }).catch(() => {
       console.log("推荐歌单数据传输错误");
     })

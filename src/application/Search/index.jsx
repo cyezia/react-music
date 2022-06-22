@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { connect } from 'react-redux';
 import { CSSTransition } from 'react-transition-group';
 import { Container, ShortcutWrapper, HotKey } from './style';
@@ -10,12 +10,14 @@ import Loading from '../../baseUI/loading/index';
 import { EnterLoading, List, ListItem } from '../Singers/style';
 import { SongItem } from '../Album/style';
 import { getName } from '../../api/utils';
+import MusicalNote from '../../baseUI/music-note';
 
 
 const Search = (props) => {
   // 控制动画
   const [show, setShow] = useState(false);
   const [query, setQuery] = useState('');
+  const musicNoteRef = useRef();
 
   const {
     hotList,
@@ -121,6 +123,7 @@ const Search = (props) => {
 
   const selectItem = (e, id) => {
     getSongDetailDispatch(id);
+    musicNoteRef.current.startAnimation({x:e.nativeEvent.clientX, y:e.nativeEvent.clientY});
   }
 
   // 渲染歌曲列表
@@ -128,7 +131,7 @@ const Search = (props) => {
     return (
       <SongItem style={{paddingLeft: "20px"}}>
         {
-          songsList.map((item => {
+          songsList.map(item => {
             return (
               <li key={item.id} onClick={(e) => selectItem(e, item.id)}>
                 <div className="info">
@@ -139,7 +142,7 @@ const Search = (props) => {
                 </div>
               </li>
             )
-          }))
+          })
         }
       </SongItem>
     )
@@ -185,6 +188,7 @@ const Search = (props) => {
           </Scroll>
         </ShortcutWrapper>
         { enterLoading ? <EnterLoading><Loading></Loading></EnterLoading> : null}
+        <MusicalNote ref={musicNoteRef}></MusicalNote>
       </Container>
     </CSSTransition>
   )
@@ -196,7 +200,8 @@ const mapStateToProps = (state) => ({
   suggestList: state.getIn(['search', 'suggestList']),
   songsList: state.getIn(['search', 'songsList']),
   enterLoading: state.getIn(['search', 'enterLoading']),
-  songsCount: state.getIn(['player', 'playList'])
+  // 解决mini播放器出现后底部内容被遮挡，判断playList长度，如果大于0则正在播放，等于0则没有播放
+  songsCount: state.getIn(['player', 'playList']).size
 })
 
 // 映射dispatch到props上

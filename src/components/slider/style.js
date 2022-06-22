@@ -8,6 +8,8 @@ export const SliderContainer = styled.div`
   height: 100%;
   margin: auto;
   background: white;
+
+  /* 下拉时有一段空白是默认的背景颜色，提供遮罩效果，美化成主题色 */
   .before {
     position: absolute;
     top: -300px;
@@ -15,6 +17,7 @@ export const SliderContainer = styled.div`
     width: 100%;
     background: ${style["theme-color"]};
   }
+
   .slider-container {
     position: relative;
     width: 98%;

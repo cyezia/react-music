@@ -6,6 +6,8 @@ import { Content } from './style';
 import * as actionTypes from './store/actionCreators'; 
 import { connect } from 'react-redux';
 import { renderRoutes } from 'react-router-config';
+import Loading from '../../baseUI/loading-v2/index';
+import { EnterLoading } from './../Singers/style';
 
 // 推荐组件
 function Recommend(props) {
@@ -25,7 +27,7 @@ function Recommend(props) {
   //   }
   // });
 
-  const { bannerList, recommendList } = props;
+  const { bannerList, recommendList, songsCount, enterLoading } = props;
   const { getBannerDataDispatch, getRecommendListDataDispatch } = props;
 
   useEffect(() => {
@@ -42,19 +44,19 @@ function Recommend(props) {
 
   const bannerListJS = bannerList ? bannerList.toJS() : [];
   // console.log('bannerList: ', bannerList);
-
   const recommendListJS = recommendList ? recommendList.toJS() : [];
 
 
   return (
     // 加入外部容器content 引入滚动条组件
-    <Content>
+    <Content play={songsCount}>
       <Scroll className="list">
         <div>
           <Slider bannerList={bannerListJS}></Slider>
           <RecommendList recommendList={recommendListJS}></RecommendList>
         </div>
       </Scroll>
+      { enterLoading ? <EnterLoading><Loading></Loading></EnterLoading> : null }
       {/* 将目前所在路由的下一层子路由加以渲染 */}
       { renderRoutes(props.route.routes) }
     </Content>
@@ -64,7 +66,9 @@ function Recommend(props) {
 // 映射redux全局的state到组件的props上
 const mapStateToProps = (state) => ({
   bannerList: state.getIn(['recommend', 'bannerList']),
-  recommendList: state.getIn(['recommend', 'recommendList'])
+  recommendList: state.getIn(['recommend', 'recommendList']),
+  songsCount: state.getIn(['player', 'playList']).size,
+  enterLoading: state.getIn(['recommend', 'enterLoading'])
 });
 
 // 映射dispatch到props上

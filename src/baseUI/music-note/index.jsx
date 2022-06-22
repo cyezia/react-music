@@ -20,6 +20,7 @@ const Container = styled.div`
   }
 `
 
+// 函数式组件天生不具备被上层组件直接调用ref的条件 用forwardRef包裹来处理
 const MusicNote = forwardRef((props, ref) => {
   const iconsRef = useRef();
   const ICON_NUMBER = 10;
@@ -53,6 +54,7 @@ const MusicNote = forwardRef((props, ref) => {
   }, []);
 
   const startAnimation = ({x, y}) => {
+    // console.log('startAnimation: ', startAnimation);
     for(let i = 0; i < ICON_NUMBER; i++) {
       let domArray = [].slice.call(iconsRef.current.children)
       let item = domArray[i]
@@ -72,6 +74,7 @@ const MusicNote = forwardRef((props, ref) => {
     }
   };
 
+  // 一般和forwardRef一起使用，ref已经在forwardRef中默认传入
   useImperativeHandle(ref, () => ({
     startAnimation
   }));

@@ -165,7 +165,8 @@ const mapStateToProps = state => ({
   artist: state.getIn(["singerInfo", "artist"]),
   songs: state.getIn(["singerInfo", "songsOfArtist"]),
   loading: state.getIn(["singerInfo", "loading"]),
-  songsCount: state.getIn(["player", "playList"])
+  // 解决mini播放器出现后底部内容被遮挡，判断playList长度，如果大于0则正在播放，等于0则没有播放
+  songsCount: state.getIn(["player", "playList"]).size
 });
 
 // 映射dispatch到props上

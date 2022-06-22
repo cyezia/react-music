@@ -1,5 +1,7 @@
-/* eslint-disable import/no-anonymous-default-export */
+// 用于存放 initialState 和reducer函数
+
 import * as actionTypes from './constants';
+// fromJS 用于把JS数据转换成immutable数据结构
 import { fromJS} from 'immutable';
 import { playMode } from '../../../api/config';
 import { findIndex } from '../../../api/utils';
@@ -76,9 +78,11 @@ const handleDeleteSong = (state, song) => {
   });
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default (state = defaultState, action) => {
   switch(action.type) {
     case actionTypes.SET_CURRENT_SONG:
+      // 由于存放的是immutable数据，所以必须用set方法来设置新状态
       return state.set('currentSong', action.data);
     case actionTypes.SET_FULL_SCREEN:
       return state.set('fullScreen', action.data);

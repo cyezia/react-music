@@ -15,6 +15,7 @@ function AlbumDetail(props) {
           <div className="filter"></div>
         </div>
         <div className="img_wrapper">
+          {/* 给图片上的图标和文字提供一个遮罩 因为字体颜色设置的白色，当背景图片也是白色的时候，会看不清，故提供一个阴影来衬托文字 */}
           <div className="decorate"></div>
           <img src={currentAlbum.coverImgUrl} alt="" />
           <div className="play_count">

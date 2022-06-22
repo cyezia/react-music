@@ -5,6 +5,7 @@ import { changePlayList, changeCurrentIndex, changeSequencePlayList } from './..
 import { connect } from 'react-redux'
 import { ONE_PAGE_COUNT } from '../../api/config';
 
+// 函数式组件天生不具备被上层组件直接调用ref的条件 用forwardRef包裹来处理
 const SongsList = React.forwardRef((props, refs)=> {
   // debugger;
   const [startIndex, setStartIndex] = useState(0);

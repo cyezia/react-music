@@ -75,12 +75,15 @@ const ConfirmWrapper = styled.div`
   }
 `
 
+// 函数式组件天生不具备被上层组件直接调用ref的条件 用forwardRef包裹来处理
 const Confirm = forwardRef((props, ref) => {
   const [show, setShow] = useState(false);
   const { text, cancelBtnText, confirmBtnText } = props;
   const { handleConfirm } = props;
 
+  // 一般和forwardRef一起使用，ref已经在forwardRef中默认传入
   useImperativeHandle(ref, () => ({
+    // 给外界暴露show方法
     show() {
       setShow(true);
     }

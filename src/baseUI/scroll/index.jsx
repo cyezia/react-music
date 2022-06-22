@@ -57,7 +57,7 @@ const Scroll = forwardRef((props, ref) => {
   // 创建better-scroll
   useEffect(() => {
     const scroll = new BScroll(scrollContaninerRef.current, {
-      scrollX: direction === "horizental",
+      scrollX: direction === "horizontal",
       scrollY: direction === "vertical",
       probeType: 3,
       click: click,
@@ -120,14 +120,16 @@ const Scroll = forwardRef((props, ref) => {
     }
   });
 
-  // useImperativeHandle 第二个参数帮助把返回的内容挂载到父组件
+  // useImperativeHandle 第二个参数帮助把返回的内容挂载到父组件 一般和forwardRef一起使用，ref已经在forwardRef中默认传入
   useImperativeHandle(ref,  () => ({
+    // 给外界暴露refresh方法
     refresh() {
       if(bScroll) {
         bScroll.refresh();
         bScroll.scrollTo(0, 0);
       }
     },
+    // 给外界暴露getBScroll方法，提供bs实例
     getBScroll() {
       if(bScroll) {
         return bScroll;
@@ -164,7 +166,7 @@ Scroll.defaultProps = {
 }
 
 Scroll.propTypes = {
-  direction: PropTypes.oneOf(['vertical', 'horizental']), //滚动的方向 垂直 水平
+  direction: PropTypes.oneOf(['vertical', 'horizontal']), //滚动的方向 垂直 水平
   click: true, // 是否支持点击
   refresh: PropTypes.bool, // 刷新
   onScroll: PropTypes.func, // 滑动触发的回调函数

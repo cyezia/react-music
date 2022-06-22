@@ -24,7 +24,7 @@ const HeaderContainer = styled.div`
   }
 `
 
-// 用forwardRef处理该组件拿不到ref的问题
+// 函数式组件天生不具备被上层组件直接调用ref的条件 用forwardRef包裹来处理
 const Header = React.forwardRef((props, ref) => {
   const { handleClick, title } = props;
 

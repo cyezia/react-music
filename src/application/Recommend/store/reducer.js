@@ -12,6 +12,7 @@ const defaultState = fromJS({
 const recommendReducer = (state = defaultState, action) => {
   switch(action.type) {
     case actionTypes.CHANGE_BANNER:
+      // 由于存放的是immutable数据，所以必须用set方法来设置新状态
       return state.set('bannerList', action.data);
     case actionTypes.CHANGE_RECOMMEND_LIST:
       return state.set('recommendList', action.data);

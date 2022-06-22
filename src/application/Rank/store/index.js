@@ -1,3 +1,4 @@
+// fromJS 用于把JS数据转换成immutable数据结构
 import { fromJS } from 'immutable';
 import { getRankListRequest  } from '../../../api/request';
 
@@ -35,6 +36,7 @@ const defaultState = fromJS({
 const reducer = (state = defaultState, action) => {
   switch(action.type) {
     case CHANGE_RANK_LIST:
+      // 由于存放的是immutable数据，所以必须用set方法来设置新状态
       return state.set('rankList', action.data);
     case CHANGE_LOADING:
       return state.set('loading', action.data);

@@ -177,8 +177,8 @@ export const CDWrapper = styled.div`
       right: 0;
       top: 0;
       bottom: 0;
-      width: 98%;
-      height: 98%;
+      width: 100%;
+      height: 100%;
       margin: auto;
       border-radius: 50%;
     }
@@ -193,7 +193,7 @@ export const CDWrapper = styled.div`
     position: absolute;
     margin: auto;
     width: 80%;
-    top: 95vw;
+    top: 100vw;
     font-size: 14px;
     line-height: 20px;
     white-space: normal;

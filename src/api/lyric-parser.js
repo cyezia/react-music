@@ -7,6 +7,7 @@
  * 
 */
 // 解析[00:01.997] 这一类的时间戳的正则表达式
+// eslint-disable-next-line no-useless-escape
 const timeExp = /\[(\d{2,}):(\d{2})(?:[\.\:](\d{2,3}))?]/g
 
 const STATE_PAUSE = 0
@@ -21,7 +22,6 @@ const tagRegMap = {
 }
 
 function noop() {
-
 }
 
 export default class Lyric {
@@ -34,16 +34,18 @@ export default class Lyric {
     this.curLineIndex = 0
     this.speed = speed
     this.offset = 0
+
     this._init()
   }
 
   _init() {
     this._initTag()
+
     this._initLines()
   }
 
   _initTag() {
-    for(let tag in tagRegMap) {
+    for (let tag in tagRegMap) {
       const matches = this.lrc.match(new RegExp(`\\[${tagRegMap[tag]}:([^\\]]*)]`, 'i'))
       this.tags[tag] = matches && (matches[1] || '')
     }
@@ -51,13 +53,13 @@ export default class Lyric {
 
   _initLines() {
     const lines = this.lrc.split('\n')
-    for(let i = 0; i < lines.length; i++) {
+    for (let i = 0; i < lines.length; i++) {
       const line = lines[i]
       let result = timeExp.exec(line)
-      if(result) {
+      if (result) {
         const txt = line.replace(timeExp, '').trim();
-        if(txt) {
-          if(result[3].length === 3) {
+        if (txt) {
+          if (result[3].length === 3) {
             result[3] = result[3]/10;
           }
           this.lines.push({
@@ -67,22 +69,24 @@ export default class Lyric {
         }
       }
     }
+
     this.lines.sort((a, b) => {
       return a.time - b.time
     })
+
   }
 
   _findcurLineIndex(time) {
-    for(let i = 0; i < this.lines.length; i++) {
-      if(time <= this.lines[i].time) {
-        return i;
+    for (let i = 0; i < this.lines.length; i++) {
+      if (time <= this.lines[i].time) {
+        return i
       }
     }
-    return this.lines.length - 1;
+    return this.lines.length - 1
   }
 
   _callHandler(i) {
-    if(i < 0) {
+    if (i < 0) {
       return
     }
     this.handler({
@@ -103,7 +107,7 @@ export default class Lyric {
     }
     this.timer = setTimeout(() => {
       this._callHandler(this.curLineIndex++)
-      if(this.curLineIndex < this.lines.length && this.state === STATE_PLAYING) {
+      if (this.curLineIndex < this.lines.length && this.state === STATE_PLAYING) {
         this._playRest()
       }
     }, (delay / this.speed))
@@ -113,32 +117,29 @@ export default class Lyric {
     this.speed = speed;
   }
 
-  // offset为时间进度 isSeek标识着用户是否手动调整进度
   play(offset = 0, isSeek = false) {
-    if(!this.lines.length) {
+    if (!this.lines.length) {
       return
     }
     this.state = STATE_PLAYING
-    // 找到当前所在的行
+
     this.curLineIndex = this._findcurLineIndex(offset)
-    // 现在正处于第this.curLineIndex-1行 立即定位 方式是调用传来的回调函数 并把当前歌词信息传给它
-    this._callHandler(this.curLineIndex - 1)
+    //现在正处于第this.curLineIndex-1行
+    this._callHandler(this.curLineIndex-1)
     this.offset = offset
-    // 根据时间进度判断歌曲开始的时间戳
     this.startStamp = +new Date() - offset
 
-    if(this.curLineIndex < this.lines.length) {
+    if (this.curLineIndex < this.lines.length) {
       clearTimeout(this.timer)
-      // 继续播放
       this._playRest(isSeek)
     }
   }
 
   togglePlay(offset) {
-    if(this.state === STATE_PLAYING) {
+    if (this.state === STATE_PLAYING) {
       this.stop()
       this.offset = offset
-    }else {
+    } else {
       this.state = STATE_PLAYING
       this.play(offset, true)
     }

@@ -76,15 +76,18 @@ function Player(props) {
   const currentLineNum = useRef(0);
   const songReady = useRef(true);
 
+  // 解决频繁切换歌曲出现的异常 
+  // 原理：audio标签拿到src加载到能够播放直接有一个缓冲的过程，只有当控件能够播放时，才能切换到下一首
   useEffect(() => {
     if (
       !playList.length ||
       currentIndex === -1 ||
       !playList[currentIndex] ||
       playList[currentIndex].id === preSong.id ||
-      !songReady.current
+      !songReady.current  // 标志位
     )
     return;
+    // 标志位设置为false，表示现在新的资源没有缓冲完，不能切歌
     songReady.current = false;
     let current = playList[currentIndex];
     changeCurrentDispatch(current); // 赋值currentSong
@@ -149,12 +152,14 @@ function Player(props) {
       });
   };
 
-  // 歌曲暂停
+  // 歌曲暂停/播放
   const clickPlaying = (e, state) => {
     e.stopPropagation();
     togglePlayingDispatch(state);
-  }
-
+    if(currentLyric.current) {
+      currentLyric.current.togglePlay(currentTime * 1000);
+    }
+  };
 
   // 进度条被点击或滑动时改变percent的回调函数，歌曲进度更新
   const onProgressChange = curPercent => {

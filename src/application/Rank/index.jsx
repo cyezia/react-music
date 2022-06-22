@@ -62,6 +62,7 @@ function Rank(props) {
               <ListItem key={`${item.coverImgId}${index}`} tracks={item.tracks} onClick={() => enterDetail(item)}>
                 <div className="img_wrapper">
                   <img src={item.coverImgUrl} alt="" />
+                  {/* 给图片上的图标和文字提供一个遮罩 因为字体颜色设置的白色，当背景图片也是白色的时候，会看不清，故提供一个阴影来衬托文字 */}
                   <div className="decorate"></div>
                   <span className="update_frequecy">{item.updateFrequency}</span>
                 </div>
@@ -100,7 +101,8 @@ function Rank(props) {
 const mapStateToProps = (state) => ({
   rankList: state.getIn(['rank', 'rankList']),
   loading: state.getIn(['rank', 'loading']),
-  songsCount: state.getIn(['player', 'playList'])
+  // 解决mini播放器出现后底部内容被遮挡，判断playList长度，如果大于0则正在播放，等于0则没有播放
+  songsCount: state.getIn(['player', 'playList']).size
 });
 
 // 映射dispatch到props上

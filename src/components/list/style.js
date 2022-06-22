@@ -31,12 +31,13 @@ export const ListItem = styled.div`
       position: absolute;
       top: 0;
       width: 100%;
-      height: 35px:
+      height: 35px;
       border-radius: 3px;
       // 设置渐变
       background: linear-gradient(hsla(0, 0%, 43%, .4), hsla(0, 0%, 100%, 0));
     }
     position: relative;
+    /* 给图片一个占位高度（图片加载时需要占位，否则better-scroll无法正确获取子元素的高度，导致content的判定高度小于wrapper） */
     height: 0;
     padding-bottom: 100%;
 
@@ -57,8 +58,8 @@ export const ListItem = styled.div`
     // 图片样式
     img {
       position: absolute;
-      width: 100%；
-      height: 100%；
+      width: 100%;
+      height: 100%;
       border-radius: 3px;
     }
   }
@@ -74,5 +75,4 @@ export const ListItem = styled.div`
     line-height: 1.4;
     color: ${style["font-color-desc"]};
   }
-
 `;

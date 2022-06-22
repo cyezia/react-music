@@ -29,7 +29,7 @@ function Horizen(props) {
   }
 
   return (
-    <Scroll direction={"horizental"} refresh={true}>
+    <Scroll direction={"horizontal"} refresh={true}>
       <div ref={Category}>
         <List>
           <span>{title}</span>
@@ -39,7 +39,7 @@ function Horizen(props) {
                 <ListItem
                   key={item.key}
                   className={oldVal === item.key ? 'selected' : ''}
-                  onclick={() => clickHandle(item)}
+                  onClick={() => clickHandle(item)}
                 >
                   {item.name}
                 </ListItem>

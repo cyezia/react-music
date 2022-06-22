@@ -38,6 +38,7 @@ function Singers(props){
   const handleUpdateCategory = (newVal) => {
     if(category === newVal) return;
     updateCategory(newVal);
+    // 调用方法刷新scroll组件
     scrollRef.current.refresh();
   };
 
@@ -45,6 +46,7 @@ function Singers(props){
   const handleUpdateAlpha = (newVal) => {
     if(alpha === newVal) return;
     updateAlpha(newVal);
+    // 调用方法刷新scroll组件
     scrollRef.current.refresh();
   };
 
@@ -72,16 +74,17 @@ function Singers(props){
     <div>
       {/* better-scroll 其作用的元素外面必须要有一个尺寸确定的容器（NavContainer）包裹 */}
       <NavContainer>
-        <Horizen title={"分类(默认热门):"} list={ categoryTypes } handleClick={(v) => handleUpdateCategory(v)} oldVal={category}></Horizen>
-        <Horizen title={"首字母:"} list={ alphaTypes } handleClick={(v) => handleUpdateAlpha(v)} oldVal={alpha}></Horizen>
+        <Horizen title={"分类(默认热门):"} list={categoryTypes} handleClick={(v) => handleUpdateCategory(v)} oldVal={category}></Horizen>
+        <Horizen title={"首字母:"} list={alphaTypes} handleClick={(v) => handleUpdateAlpha(v)} oldVal={alpha}></Horizen>
       </NavContainer>
       <ListContainer play={songs}>
         <Scroll 
-          pullUp={ handlePullUp }
-          pullDown = { handlePullDown }
-          ref={ scrollRef }
-          pullUpLoading = { pullUpLoading }
-          pullDownLoading = { pullDownLoading }
+          // 给外界暴露组件方法
+          pullUp={handlePullUp}
+          pullDown={handlePullDown} 
+          ref={scrollRef} 
+          pullUpLoading={pullUpLoading}
+          pullDownLoading={pullDownLoading}
           >
           { renderSingerList() }
         </Scroll>
@@ -101,7 +104,8 @@ const mapStateToProps = (state) => ({
   pullUpLoading: state.getIn(['singers', 'pullUpLoading']),
   pullDownLoading: state.getIn(['singers', 'pullDownLoading']),
   page: state.getIn(['singers', 'page']),
-  songs: state.getIn(['player', 'playList'])
+  // 解决mini播放器出现后底部内容被遮挡，判断playList长度，如果大于0则正在播放，等于0则没有播放
+  songs: state.getIn(['player', 'playList']).size
 });
 
 const mapDispatchToProps = (dispatch) => {
