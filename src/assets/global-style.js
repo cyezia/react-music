@@ -27,6 +27,7 @@ const bgFull = () => {
   `
 };
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   "theme-color": "#d44439",
   "theme-color-shadow": "rgba(212, 68, 57, .5)",
