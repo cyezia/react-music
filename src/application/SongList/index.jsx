@@ -11,7 +11,7 @@ const SongsList = React.forwardRef((props, refs)=> {
   const [startIndex, setStartIndex] = useState(0);
   const { collectCount, showCollect, songs, loading=false, usePageSplit } = props;
   const { changePlayListDispatch, changeCurrentIndexDispatch, changeSequencePlayListDispatch } = props;
-  const { musicAnimation } = props;
+  // const { musicAnimation } = props;
   const totalCount = songs.length;
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const SongsList = React.forwardRef((props, refs)=> {
     changePlayListDispatch(songs);
     changeSequencePlayListDispatch(songs);
     changeCurrentIndexDispatch(index);
-    musicAnimation(e.nativeEvent.clientX, e.nativeEvent.clientY);
+    // musicAnimation(e.nativeEvent.clientX, e.nativeEvent.clientY);
   }
 
   let songList = (list) => {

@@ -18,7 +18,7 @@ function Album(props) {
   const [ showStatus, setShowStatus ] = useState(true);
   const [ title, setTitle ] = useState("歌单");
   const headerEl = useRef();
-  const musicNoteRef = useRef();
+  // const musicNoteRef = useRef();
   // 从路由中拿到歌单的id
   const id = props.match.params.id;
 
@@ -55,9 +55,9 @@ function Album(props) {
     setShowStatus(false);
   }, []);
 
-  const musicAnimation = (x, y) => {
-    musicNoteRef.current.startAnimation({x, y});
-  }
+  // const musicAnimation = (x, y) => {
+  //   musicNoteRef.current.startAnimation({x, y});
+  // }
 
   return (
     <CSSTransition 
@@ -79,7 +79,8 @@ function Album(props) {
               pullUpLoading={pullUpLoading}
               bounceTop={false}
             >
-              <AlbumDetail currentAlbum={currentAlbumJS} pullUpLoading={pullUpLoading} musicAnimation={musicAnimation}></AlbumDetail>
+              {/* <AlbumDetail currentAlbum={currentAlbumJS} pullUpLoading={pullUpLoading} musicAnimation={musicAnimation}></AlbumDetail> */}
+              <AlbumDetail currentAlbum={currentAlbumJS} pullUpLoading={pullUpLoading}></AlbumDetail>
             </Scroll>
           ) : null
         }

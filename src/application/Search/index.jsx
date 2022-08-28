@@ -123,7 +123,7 @@ const Search = (props) => {
 
   const selectItem = (e, id) => {
     getSongDetailDispatch(id);
-    musicNoteRef.current.startAnimation({x:e.nativeEvent.clientX, y:e.nativeEvent.clientY});
+    // musicNoteRef.current.startAnimation({x:e.nativeEvent.clientX, y:e.nativeEvent.clientY});
   }
 
   // 渲染歌曲列表
